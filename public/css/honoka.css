@@ -1,4 +1,4 @@
-body { padding-top: 80px; }
+body { padding-top: 30px; }
 @media ( min-width: 768px ) {
   #banner {
     min-height: 300px;

@@ -44,7 +44,8 @@ bower.json
 .byebug_history
 
 # below, depend on my own env
-config/secrets.yml
 .ruby-version
+config/secrets.yml
+config/database.yml
 config/environments/development.rb
 app/lib/suikoden_election_2017_tweets.md
