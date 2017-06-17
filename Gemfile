@@ -56,3 +56,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # suikoden_election_2017
 gem 'twitter'
 gem 'mysql2' # need `$ sudo apt-get install libmysqlclient-dev`
+gem 'whenever', require: false # cron on Rails
+gem 'kaminari'

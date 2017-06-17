@@ -1,0 +1,2 @@
+class AttachedImage < ApplicationRecord
+end

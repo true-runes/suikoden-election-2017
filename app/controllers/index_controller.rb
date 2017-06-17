@@ -1,6 +1,9 @@
 class IndexController < ApplicationController
+  include TweetsJoinUsers
+  include SelectTweetsByHashtag
+
   def index
-    # render file: '/home/etheria/suikoden_election_2017/public/bootstrap.html'
-    # resources :index
+    source_tweets = without_retweets
+    @vote_amount = select_tweets_by_hashtag(source_tweets, "幻水総選挙2017投票").length
   end
 end

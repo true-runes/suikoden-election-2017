@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # HACK: below, not RESTful...
   get '/', to: 'index#index'
+  resources :how_to_vote
+  resources :tweet_as_vote
+  resources :tweet_as_pr
+  match '/check_vote/result' => 'check_vote#result', via: [ :get, :post ]
+  resources :check_vote
 end

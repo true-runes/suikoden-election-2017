@@ -1,0 +1,2 @@
+module HowToVoteHelper
+end

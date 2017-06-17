@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: MyString
+  screen_name: MyString
+  name: MyString
+  profile_image_uri: MyString
+  is_protected: false
+
+two:
+  user_id: MyString
+  screen_name: MyString
+  name: MyString
+  profile_image_uri: MyString
+  is_protected: false

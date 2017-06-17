@@ -1,0 +1,2 @@
+class IsReadableTweet < ApplicationRecord
+end

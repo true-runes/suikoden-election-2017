@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="page-header" id="banner">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1><strong>投票チェック</strong></h1><br>
+        <div class="form-group">
+          <div class="input-group col-lg-3">
+          <label class="control-label">Twitter ID を入力してください。</label>
+            <%= form_tag(action: :result) do %>
+              <div class="input-group-btn">
+                <%= text_field_tag :screen_name, "", class: "form-control", placeholder: "gensosenkyo" %>
+              </div>
+              <%= submit_tag("チェック！", class: "btn btn-default") %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
