@@ -44,6 +44,7 @@ bower.json
 .byebug_history
 
 # below, depend on my own env
+snippet.md
 .ruby-version
 config/secrets.yml
 config/database.yml
