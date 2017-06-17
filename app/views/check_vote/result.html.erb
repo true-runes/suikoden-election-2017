@@ -8,7 +8,7 @@
           <br>
           <strong>※チェックができるのはツイート（呟き）での投票のみです。</strong>
           <br>
-          <strong>※チェック結果が出ない場合、集計に反映されない可能性があります。投票内容を書いて <%= link_to "@geneosenkyo", "https://twitter.com/gensosenkyo" %> までリプかDMでご連絡ください。</strong>
+          <strong>※チェック結果が出ない場合、集計に反映されない可能性があります。投票内容を書いて <%= link_to "@gensosenkyo", "https://twitter.com/gensosenkyo" %> までリプかDMでご連絡ください。</strong>
         </div>
         <%= "<strong>チェック結果は 0 件でした。</strong>".html_safe if @result_tweets.empty? %>
         <% @tweets = @result_tweets %>

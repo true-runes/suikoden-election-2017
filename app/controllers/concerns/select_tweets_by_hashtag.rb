@@ -5,7 +5,8 @@ module SelectTweetsByHashtag
     tweets.each do |tweet|
       target_tweets = Hashtag.where(tweet_id: tweet.tweet_id)
       target_tweets.each do |target_tweet|
-        @selected_tweets << tweet if target_tweet.tagname == hashtag_a or target_tweet.tagname == hashtag_b
+        @selected_tweets << tweet if target_tweet.tagname == hashtag_a || target_tweet.tagname == hashtag_b
+        break # TODO: 「どちらかが含まれていた時点で終了」ということであるが、論理的に複雑である
       end
     end
     @selected_tweets
