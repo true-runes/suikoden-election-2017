@@ -8,9 +8,8 @@
               </h3>
             </div>
             <div class="panel-body">
-              <% tweet_text = tweet.text.html_safe.gsub(/https:\/\/t\.co\/[0-9a-zA-Z]{10}/, "") %>
-              <%= tweet_text %>
-              <br>
+              <% tweet_text = tweet.text.gsub(/https:\/\/t\.co\/[0-9a-zA-Z]{10}/, "") %>
+              <%=simple_format(h(tweet_text)) %>
               <% tweeted_at_in_jp = tweet.tweeted_at.strftime("%Y/%m/%d（#{%w(日 月 火 水 木 金 土)[tweet.tweeted_at.wday]}）%H:%M:%S") %>
               <% source_tweet_message = tweet.is_attached_image? ? "#{tweeted_at_in_jp}（添付画像あり）" : tweeted_at_in_jp %>
               <%= link_to source_tweet_message, "#{tweet.uri}" %>
