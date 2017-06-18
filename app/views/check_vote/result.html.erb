@@ -12,6 +12,9 @@
           <br>
           <strong>※チェック結果が 0件 の場合、集計に反映されない可能性があります。投票内容を書いて <%= link_to "@gensosenkyo", "https://twitter.com/gensosenkyo" %> までリプかDMでご連絡ください。</strong>
         </div>
+        <div class="well well-sm">
+          <%= "@#{@screen_name} のチェック結果" %>
+        </div>
         <% if @result_tweets.empty? %>
           <div class="alert alert-dismissible alert-danger">
             <strong>チェック結果は 0 件でした。</strong>
