@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618110332) do
+ActiveRecord::Schema.define(version: 20170618140954) do
 
   create_table "attached_images", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "tweet_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20170618110332) do
     t.boolean "is_readable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["tweet_id"], name: "index_is_readable_tweets_on_tweet_id", unique: true
   end
 
   create_table "tweets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
