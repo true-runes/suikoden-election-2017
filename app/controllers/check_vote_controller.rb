@@ -7,8 +7,8 @@ class CheckVoteController < ApplicationController
   end
 
   def result
-    screen_name = params[:screen_name].nil? ? nil : params[:screen_name].gsub(/@/, "")
-    tweets_by_specific_user = tweets_by_specific_user(screen_name)
+    @screen_name = params[:screen_name].nil? ? "" : params[:screen_name].gsub(/@/, "")
+    tweets_by_specific_user = tweets_by_specific_user(@screen_name)
     @result_tweets = select_tweets_by_hashtag(tweets_by_specific_user, "幻水総選挙2017投票", "幻水総選挙2017")
   end
 end

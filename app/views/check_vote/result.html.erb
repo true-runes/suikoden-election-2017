@@ -3,16 +3,20 @@
     <div class="row">
       <div class="col-lg-12">
         <h1><strong>投票チェック結果</strong></h1>
-        <div class="alert alert-dismissible alert-danger">
+        <div class="alert alert-dismissible alert-info">
           <strong>※現在は削除されたツイートも表示されます。</strong>
           <br>
           <strong>※チェックの対象となるタグは「#幻水総選挙2017投票」に加え、「#幻水総選挙2017」も含んでいます。</strong>
           <br>
           <strong>※チェックができるのはツイート（呟き）での投票のみです。</strong>
           <br>
-          <strong>※チェック結果が出ない場合、集計に反映されない可能性があります。投票内容を書いて <%= link_to "@gensosenkyo", "https://twitter.com/gensosenkyo" %> までリプかDMでご連絡ください。</strong>
+          <strong>※チェック結果が 0件 の場合、集計に反映されない可能性があります。投票内容を書いて <%= link_to "@gensosenkyo", "https://twitter.com/gensosenkyo" %> までリプかDMでご連絡ください。</strong>
         </div>
-        <%= "<strong>チェック結果は 0 件でした。</strong>".html_safe if @result_tweets.empty? %>
+        <% if @result_tweets.empty? %>
+          <div class="alert alert-dismissible alert-danger">
+            <strong>チェック結果は 0 件でした。</strong>
+          </div>
+        <% end %>
         <% @tweets = @result_tweets %>
         <%= render 'show_tweets_panel' %>
       </div>
