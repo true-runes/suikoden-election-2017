@@ -1,0 +1,22 @@
+<header>
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand">集計所トップへ戻る</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li><%= link_to '集計者用ホーム', { controller: :for_members, action: :index } %></li>
+          <li><%= link_to '#幻水総選挙2017 タグ一覧', { controller: :for_members_other_tag_vote, action: :index } %></li>
+          <li><%= link_to '複数投票一覧', { controller: :for_members_duplicated_vote, action: :index } %></li>
+          <li><%= link_to '投票チェック', { controller: :check_vote, action: :index } %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

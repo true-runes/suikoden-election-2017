@@ -1,6 +1,7 @@
 class ForMembersController < ApplicationController
   include TweetsJoinUsers
   include SelectTweetsByHashtag
+  layout 'application_members'
 
   def index
     authenticate_or_request_with_http_basic do |username, password|
@@ -23,6 +24,7 @@ class ForMembersController < ApplicationController
       @removed_tweet_ids.include?(element.tweet_id)
     end
 
-    @kaminaried_tweets = Kaminari.paginate_array(result_tweets.reverse).page(params[:page]).per(20) # HACK: 個別に設定を決めないようにする
+    @kaminari_page_per = 20
+    @kaminaried_tweets = Kaminari.paginate_array(result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
   end
 end

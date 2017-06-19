@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="page-header" id="banner">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1><strong>複数投票一覧</strong></h1><br>
+        <div class="bs-component">
+          <%= paginate @kaminaried_tweets, window: 6 %>
+          <% @tweets = @kaminaried_tweets %>
+          <%= render 'show_tweets_panel_members' %>
+        </div>
+        <%= paginate @kaminaried_tweets, window: 6 %>
+      </div>
+    </div>
+  </div>
+</div>

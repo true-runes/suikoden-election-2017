@@ -1,0 +1,48 @@
+class ForMembersDuplicatedVoteController < ApplicationController
+  include TweetsJoinUsers
+  include SelectTweetsByHashtag
+  layout 'application_members'
+
+  def index
+    authenticate_or_request_with_http_basic do |username, password|
+      username == Rails.application.secrets.members_page_auth_username && password == Rails.application.secrets.members_page_auth_password
+    end
+
+    tomochin = without_retweets_and_gensosenkyo_loose_limited_period # Array
+    selected_tomochin = select_tweets_by_hashtag(tomochin, "幻水総選挙2017投票", "幻水総選挙2017")
+
+    # まずは削除済みツイートを取り除くところから
+    # TODO: コントローラに詰め込みすぎだし NOT DRY
+    unreadable_tweet_ids = IsReadableTweet.where(is_readable: false)
+    @removed_tweet_ids = []
+    unreadable_tweet_ids.each do |tweet|
+      @removed_tweet_ids << tweet.tweet_id
+    end
+
+    # 削除済みツイートを取り除く
+    tomochan = selected_tomochin.reject do |element|
+      @removed_tweet_ids.include?(element.tweet_id)
+    end
+
+    tomochan_hash = tomochan.map { |rec| rec.attributes }
+    @target_screen_names = []
+    tomochan_hash.each do |record|
+      @target_screen_names << record["screen_name"]
+    end
+
+    @result_1st = []
+    @target_screen_names.each do |screen_name|
+      if @target_screen_names.count(screen_name) >= 2
+        @result_1st << screen_name # この screen_name がやばいということ
+      end
+    end
+
+    tomotomochin = without_retweets_and_gensosenkyo_loose_limited_period_name_sort
+    last_result_tweets = tomotomochin.select do |element| # reject の反対で、合致したら採用する
+      @result_1st.include?(element.screen_name)
+    end
+
+    @kaminari_page_per = 20
+    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+  end
+end
