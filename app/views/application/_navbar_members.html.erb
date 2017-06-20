@@ -2,7 +2,7 @@
   <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <a href="/" class="navbar-brand">集計所トップへ戻る</a>
+        <a href="/for_members" class="navbar-brand">集計者用ページ</a>
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -11,10 +11,20 @@
       </div>
       <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
-          <li <% concat 'class="active"'.html_safe if controller.controller_name == "for_members" %>><%= link_to '#幻水総選挙2017投票', { controller: :for_members, action: :index } %></li>
-          <li <% concat 'class="active"'.html_safe if controller.controller_name == "for_members_other_tag_vote" %>><%= link_to '#幻水総選挙2017', { controller: :for_members_other_tag_vote, action: :index } %></li>
-          <li <% concat 'class="active"'.html_safe if controller.controller_name == "for_members_duplicated_vote" %>><%= link_to '複数投票者', { controller: :for_members_duplicated_vote, action: :index } %></li>
-          <li><%= link_to '投票チェックへ', { controller: :check_vote, action: :index } %></li>
+          <li class="dropdown<% concat ' active' if controller.controller_name == 'tweet_as_vote' || controller.controller_name == 'tweet_as_pr' %>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ツイート一覧 <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li<% concat ' class="active"'.html_safe if controller.controller_name == "for_members" %>><%= link_to '#幻水総選挙2017投票', { controller: :for_members, action: :index } %></li>
+              <li<% concat ' class="active"'.html_safe if controller.controller_name == "for_members_other_tag_vote" %>><%= link_to '#幻水総選挙2017', { controller: :for_members_other_tag_vote, action: :index } %></li>
+              <li<% concat ' class="active"'.html_safe if controller.controller_name == "for_members_duplicated_vote" %>><%= link_to '複数投票者', { controller: :for_members_duplicated_vote, action: :index } %></li>
+            </ul>
+          </li>
+          <li>
+            <%= link_to '投票チェックへ', { controller: :check_vote, action: :index } %>
+          </li>
+          <li>
+            <%= link_to '集計所へ戻る', { controller: :index, action: :index } %>
+          </li>
         </ul>
       </div>
     </div>
