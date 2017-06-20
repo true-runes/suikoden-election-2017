@@ -2,7 +2,22 @@
   <div class="page-header" id="banner">
     <div class="row">
       <div class="col-lg-12">
-        <h1><strong>#幻水総選挙2017 タグ一覧</strong></h1><br>
+        <h1><strong>#幻水総選挙2017 の投票一覧</strong></h1><br>
+        <div class="form-group">
+          <div class="input-group col-lg-4">
+          <label class="control-label">検索したいワードを入力して下さい<br>（ツイート本文、一語、あいまい検索）</label>
+            <%= form_tag(action: :index) do %>
+              <div class="input-group-btn">
+                <%= text_field_tag :search_word, "", class: "form-control", placeholder: "幻想水滸伝" %>
+              </div>
+              <%= submit_tag("検索", class: "btn btn-default") %>
+            <% end %>
+          </div>
+        </div>
+        <div class="well well-sm">
+          <% concat "<strong>#{params[:search_word]} の検索結果</strong><br>".html_safe unless params[:search_word].blank?%>
+          <%= "総件数: #{@kaminaried_tweets.total_count} 件" %>
+        </div>
         <div class="bs-component">
           <%= paginate @kaminaried_tweets, window: 6 %>
           <% @tweets = @kaminaried_tweets %>

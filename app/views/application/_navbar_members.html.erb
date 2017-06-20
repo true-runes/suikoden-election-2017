@@ -11,10 +11,10 @@
       </div>
       <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
-          <li><%= link_to '集計者用ホーム', { controller: :for_members, action: :index } %></li>
-          <li><%= link_to '#幻水総選挙2017 タグ一覧', { controller: :for_members_other_tag_vote, action: :index } %></li>
-          <li><%= link_to '複数投票一覧', { controller: :for_members_duplicated_vote, action: :index } %></li>
-          <li><%= link_to '投票チェック', { controller: :check_vote, action: :index } %></li>
+          <li <% concat 'class="active"'.html_safe if controller.controller_name == "for_members" %>><%= link_to '#幻水総選挙2017投票', { controller: :for_members, action: :index } %></li>
+          <li <% concat 'class="active"'.html_safe if controller.controller_name == "for_members_other_tag_vote" %>><%= link_to '#幻水総選挙2017', { controller: :for_members_other_tag_vote, action: :index } %></li>
+          <li <% concat 'class="active"'.html_safe if controller.controller_name == "for_members_duplicated_vote" %>><%= link_to '複数投票者', { controller: :for_members_duplicated_vote, action: :index } %></li>
+          <li><%= link_to '投票チェックへ', { controller: :check_vote, action: :index } %></li>
         </ul>
       </div>
     </div>

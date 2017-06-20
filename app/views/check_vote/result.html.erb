@@ -3,13 +3,6 @@
     <div class="row">
       <div class="col-lg-12">
         <h1><strong>投票チェック結果</strong></h1>
-        <div class="alert alert-dismissible alert-info">
-          <strong>※チェックの対象となるタグは「#幻水総選挙2017投票」に加え、「#幻水総選挙2017」も含んでいます。</strong>
-          <br>
-          <strong>※チェックができるのはツイート（呟き）での投票のみです。</strong>
-          <br>
-          <strong>※チェック結果が 0件 の場合、集計に反映されない可能性があります。投票内容を書いて <%= link_to "@gensosenkyo", "https://twitter.com/gensosenkyo" %> までリプかDMでご連絡ください。</strong>
-        </div>
         <div class="well well-sm">
           <%= "@#{@screen_name} のチェック結果" %>
         </div>
@@ -20,6 +13,13 @@
         <% end %>
         <% @tweets = @result_tweets %>
         <%= render 'show_tweets_panel' %>
+        <div class="alert alert-dismissible alert-info">
+          <strong>※チェックの対象となるタグは「#幻水総選挙2017投票」に加え、「#幻水総選挙2017」も含んでいます。</strong>
+          <br>
+          <strong>※チェックができるのはツイート（呟き）での投票のみです。</strong>
+          <br>
+          <strong>※チェック結果が 0件 の場合、集計に反映されない可能性があります。投票内容を書いて <%= link_to "@gensosenkyo", "https://twitter.com/gensosenkyo" %> までリプかDMでご連絡ください。</strong>
+        </div>
       </div>
     </div>
   </div>
