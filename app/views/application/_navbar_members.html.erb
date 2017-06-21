@@ -11,6 +11,9 @@
       </div>
       <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
+          <li>
+            <%= link_to '抽出条件', { controller: :for_members, action: :requirement } %>
+          </li>
           <li class="dropdown<% concat ' active' if controller.controller_name == 'for_members_normal_vote' || controller.controller_name == 'for_members_other_tag_vote' || controller.controller_name == 'for_members_duplicated_vote' || controller.controller_name == 'for_members_all_vote' %>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ツイート一覧 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">

@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :how_to_vote
   resources :tweet_as_vote
   resources :tweet_as_pr
+
+  match '/for_members/requirement' => 'for_members#requirement', via: [ :get, :post ]
   resources :for_members
 
   match '/for_members_normal_vote' => 'for_members_normal_vote#index', via: [ :get, :post ]

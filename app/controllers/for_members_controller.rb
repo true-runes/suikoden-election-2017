@@ -17,4 +17,7 @@ class ForMembersController < ApplicationController
     # show_vote_result if request.get?
     # show_vote_result_with_search(params[:search_word]) if request.post?
   end
+
+  def requirement
+  end
 end
