@@ -1,4 +1,4 @@
-class ForMembersController < ApplicationController
+class ForMembersNormalVoteController < ApplicationController
   protect_from_forgery with: :null_session # HACK: よく勉強しないと危険
   include TweetsJoinUsers
   include SelectTweetsByHashtag
@@ -14,7 +14,7 @@ class ForMembersController < ApplicationController
   end
 
   def index
-    # show_vote_result if request.get?
-    # show_vote_result_with_search(params[:search_word]) if request.post?
+    show_vote_result if request.get?
+    show_vote_result_with_search(params[:search_word]) if request.post?
   end
 end

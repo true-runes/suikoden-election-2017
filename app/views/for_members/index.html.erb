@@ -1,28 +1,98 @@
 <div class="container">
   <div class="page-header" id="banner">
     <div class="row">
+      <div class="col-lg-8 col-md-7 col-sm-6">
+        <h1><strong>幻水総選挙2017 集計者用ページ</strong></h1>
+      </div>
       <div class="col-lg-12">
-        <h1><strong>「#幻水総選挙2017投票」の投票一覧</strong></h1><br>
-        <div class="form-group">
-          <div class="input-group col-lg-4">
-          <label class="control-label">検索したいワードを入力して下さい<br>（ツイート本文を一語のみ）</label>
-            <%= form_tag(action: :index) do %>
-              <div class="input-group-btn">
-                <%= text_field_tag :search_word, "", class: "form-control", placeholder: "幻想水滸伝" %>
+        <h3 id="nav-tabs">ツイート抽出条件</h3>
+        <div class="bs-component">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#normal_vote" data-toggle="tab"><strong>#幻水総選挙2017投票</strong></a></li>
+            <li><a href="#other_tag_vote" data-toggle="tab"><strong>#幻水総選挙2017</strong></a></li>
+            <li><a href="#duplicated_vote" data-toggle="tab"><strong>複数票投票</strong></a></li>
+            <li><a href="#all_vote" data-toggle="tab"><strong>全投票</strong></a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade active in" id="normal_vote">
+              <div class="list-group">
+                <div class="list-group-item">
+                  <p class="list-group-item-text">リツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">削除済みツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">@gensosenkyo によるツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">2017/06/16 20:45:00 ～ 2017/06/18 12:00:00 の期間のツイートを採用</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">#幻水総選挙2017投票 を含むツイートを採用</p>
+                </div>
               </div>
-              <%= submit_tag("検索", class: "btn btn-default") %>
-            <% end %>
-          </div>
+            </div>
+            <div class="tab-pane fade" id="other_tag_vote">
+              <div class="list-group">
+                <div class="list-group-item">
+                  <p class="list-group-item-text">リツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">削除済みツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">@gensosenkyo によるツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">2017/06/16 20:45:00 ～ 2017/06/18 12:00:00 の期間のツイートを採用</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">#幻水総選挙2017 の1つだけのハッシュタグを含むツイートを採用</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="duplicated_vote">
+              <div class="list-group">
+                <div class="list-group-item">
+                  <p class="list-group-item-text">リツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">削除済みツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">@gensosenkyo によるツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">2017/06/16 20:45:00 ～ 2017/06/18 12:00:00 の期間のツイートを採用</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">#幻水総選挙2017投票 または #幻水総選挙2017 を含むツイートを抽出する</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">上記ツイートを調べて、同一の人がツイートしているツイートを収集</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="all_vote">
+              <div class="list-group">
+                <div class="list-group-item">
+                  <p class="list-group-item-text">リツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">削除済みツイートは除外</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">期間は限定しない（理論上は今も増え続けている）</p>
+                </div>
+                <div class="list-group-item">
+                  <p class="list-group-item-text">#幻水総選挙2017投票 または #幻水総選挙2017 または #幻水総選挙 または #幻水総選挙運動 を含むツイートを抽出する</p>
+                </div>
+              </div>
+            </div>
+          </div><!-- tab-content -->
         </div>
-        <div class="well well-sm">
-          <% concat "<strong>#{params[:search_word]} の検索結果</strong><br>".html_safe unless params[:search_word].blank?%>
-          <%= "総件数: #{@kaminaried_tweets.total_count} 件" %>
-        </div>
-        <%= paginate @kaminaried_tweets, window: 6 %>
-        <% @tweets = @kaminaried_tweets %>
-        <%= render 'show_tweets_panel_members' %>
       </div>
     </div>
   </div>
-  <%= paginate @kaminaried_tweets, window: 6 %>
 </div>

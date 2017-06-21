@@ -1,0 +1,2 @@
+module ForMembersNormalVoteHelper
+end

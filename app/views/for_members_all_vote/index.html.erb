@@ -2,7 +2,7 @@
   <div class="page-header" id="banner">
     <div class="row">
       <div class="col-lg-12">
-        <h1><strong>「#幻水総選挙2017」の投票一覧</strong></h1><br>
+        <h1><strong>「全投票」の投票一覧</strong></h1><br>
         <div class="form-group">
           <div class="input-group col-lg-4">
           <label class="control-label">検索したいワードを入力して下さい<br>※検索対象はツイート本文<br>※検索語句は一つのみ</label>
@@ -14,17 +14,27 @@
             <% end %>
           </div>
         </div>
+        <div class="form-group">
+          <div class="input-group col-lg-4">
+          <label class="control-label">検索したい Twitter ID を入力して下さい
+            <%= form_tag({ controller: :for_members_check_vote, action: :result }) do %>
+              <div class="input-group-btn">
+                <%= text_field_tag :search_tw_id, "", class: "form-control", placeholder: "gensosenkyo" %>
+              </div>
+              <%= submit_tag("検索", class: "btn btn-default") %>
+            <% end %>
+          </div>
+        </div>
         <div class="well well-sm">
+          <% concat "<strong>#{params[:search_tw_id]} の検索結果</strong><br>".html_safe unless params[:search_tw_id].blank?%>
           <% concat "<strong>#{params[:search_word]} の検索結果</strong><br>".html_safe unless params[:search_word].blank?%>
           <%= "総件数: #{@kaminaried_tweets.total_count} 件" %>
         </div>
-        <div class="bs-component">
-          <%= paginate @kaminaried_tweets, window: 6 %>
-          <% @tweets = @kaminaried_tweets %>
-          <%= render 'show_tweets_panel_members' %>
-        </div>
         <%= paginate @kaminaried_tweets, window: 6 %>
+        <% @tweets = @kaminaried_tweets %>
+        <%= render 'show_tweets_panel_members' %>
       </div>
     </div>
   </div>
+  <%= paginate @kaminaried_tweets, window: 6 %>
 </div>
