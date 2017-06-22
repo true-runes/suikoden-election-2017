@@ -16,7 +16,7 @@
         </div>
         <div class="form-group">
           <div class="input-group col-lg-4">
-          <label class="control-label">検索したい Twitter ID を入力して下さい
+          <label class="control-label">検索したい Twitter ID を入力して下さい</label>
             <%= form_tag({ controller: :for_members_check_vote, action: :result }) do %>
               <div class="input-group-btn">
                 <%= text_field_tag :search_tw_id, "", class: "form-control", placeholder: "gensosenkyo" %>
