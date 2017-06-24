@@ -6,6 +6,7 @@ class IndexController < ApplicationController
     source_tweets = without_retweets_and_gensosenkyo_loose_limited_period
 
     # TODO: コントローラに詰め込みすぎ
+    # TODO: ここでいちいち配列に入れて、その値を元にツイートを選別……というのが速度低下の要因と思われる
     unreadable_tweet_ids = IsReadableTweet.where(is_readable: false)
     @removed_tweet_ids = []
     unreadable_tweet_ids.each do |tweet|
