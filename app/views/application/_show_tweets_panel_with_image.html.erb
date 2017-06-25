@@ -1,0 +1,30 @@
+        <% @tweets.each do |tweet| %>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%= link_to image_tag(tweet.profile_image_uri), "https://twitter.com/#{tweet.screen_name}" %>
+                &nbsp;
+                <%= link_to "#{tweet.name} / @#{tweet.screen_name}", "https://twitter.com/#{tweet.screen_name}" %>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <% tweet_text = tweet.text.gsub(/https:\/\/t\.co\/[0-9a-zA-Z]{10}/, "") %>
+              <%# tweet_text = tweet.full_text.gsub(/https:\/\/t\.co\/[0-9a-zA-Z]{10}/, "") %>
+              <%= simple_format(tweet_text.html_safe) %>
+              <% tweeted_at_in_jp = tweet.tweeted_at.strftime("%Y/%m/%d（#{%w(日 月 火 水 木 金 土)[tweet.tweeted_at.wday]}）%H:%M:%S") %>
+              <% source_tweet_message = tweeted_at_in_jp %>
+
+              <%# コントローラやモデルがビューに入り込んでいる……しかも生の SQL という…… %>
+              <% if tweet.is_attached_image? %>
+                <% images_obj = Tweet.find_by_sql([%Q{SELECT * FROM attached_images WHERE tweet_id = ? ORDER BY media_id ASC}, tweet.tweet_id])
+%>
+                <% images_obj.each do |image_obj| %>
+                  <%= image_tag image_obj.uri, width: 400 %>
+                  <br><br>
+                <% end %>
+              <% end %>
+
+              <%= link_to source_tweet_message, "#{tweet.uri}" %>
+            </div>
+          </div>
+        <% end %>

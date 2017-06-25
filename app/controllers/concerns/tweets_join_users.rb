@@ -36,4 +36,12 @@ module TweetsJoinUsers
   def tweets_by_specific_user_limited_loose_period(screen_name)
     Tweet.find_by_sql([%Q{SELECT * FROM tweets INNER JOIN users ON tweets.user_id = users.user_id WHERE (screen_name = ?) AND (is_retweet = false) AND (tweeted_at BETWEEN '2017/06/16 11:45:00' AND '2017/06/18 03:00:00') ORDER BY tweets.tweeted_at DESC}, screen_name])
   end
+
+  def tweets_by_specific_user_limited_count_vote_period(screen_name)
+    Tweet.find_by_sql([%Q{SELECT * FROM tweets INNER JOIN users ON tweets.user_id = users.user_id WHERE (screen_name = ?) AND (is_retweet = false) AND (tweeted_at BETWEEN '2017/06/25 02:45:00' AND '2017/06/26 03:00:00') ORDER BY tweets.tweeted_at ASC}, screen_name])
+  end
+
+  def attached_image_uri(target_tweet_id)
+    Tweet.find_by_sql([%Q{SELECT * FROM attached_images WHERE tweet_id = ? ORDER BY media_id ASC}, target_tweet_id])
+  end
 end

@@ -1,0 +1,2 @@
+module CountVoteHelper
+end

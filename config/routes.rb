@@ -26,4 +26,7 @@ Rails.application.routes.draw do
 
   match '/for_members_check_vote/result' => 'for_members_check_vote#result', via: [ :get, :post ]
   resources :for_members_check_vote
+
+  match '/count_vote' => 'count_vote#index', via: [ :get, :post ]
+  resources :count_vote
 end

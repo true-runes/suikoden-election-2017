@@ -11,21 +11,27 @@
       </div>
       <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
-          <li<% concat ' class="active"'.html_safe if controller.controller_name == "how_to_vote" %>><%= link_to '投票方法', { controller: :how_to_vote, action: :index } %></li>
-          <li class="dropdown<% concat ' active' if controller.controller_name == 'tweet_as_vote' || controller.controller_name == 'tweet_as_pr' %>">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ハッシュ別ツイート <span class="caret"></span></a>
+          <li class="dropdown<% concat ' active' if controller.controller_name == 'count_vote' %>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">開票関連 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
+              <li<% concat ' class="active"'.html_safe if controller.controller_name == "count_vote" %>><%= link_to '開票ツイート', { controller: :count_vote, action: :index } %></li>
+            </ul>
+          </li>
+          <li class="dropdown<% concat ' active' if controller.controller_name == 'how_to_vote' || controller.controller_name == 'check_vote' || controller.controller_name == 'tweet_as_vote' || controller.controller_name == 'tweet_as_pr' %>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">投票関連 <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li<% concat ' class="active"'.html_safe if controller.controller_name == "how_to_vote" %>><%= link_to '投票方法', { controller: :how_to_vote, action: :index } %></li>
+              <li<% concat ' class="active"'.html_safe if controller.controller_name == "check_vote" %>><%= link_to '投票チェック', { controller: :check_vote, action: :index } %></li>
               <li<% concat ' class="active"'.html_safe if controller.controller_name == "tweet_as_vote" %>><%= link_to '#幻水総選挙2017投票', { controller: :tweet_as_vote, action: :index } %></li>
               <li<% concat ' class="active"'.html_safe if controller.controller_name == "tweet_as_pr" %>><%= link_to '#幻水総選挙運動', { controller: :tweet_as_pr, action: :index } %></li>
             </ul>
           </li>
-          <li <% concat 'class="active"'.html_safe if controller.controller_name == "check_vote" %>><%= link_to '投票チェック', { controller: :check_vote, action: :index } %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">その他 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li><%= link_to '集計者用ページ', { controller: :for_members, action: :index } %></li>
               <li><a href="#">Special Thanks（建設中）</a></li>
-              </ul>
+            </ul>
           </li>
         </ul>
       </div>
