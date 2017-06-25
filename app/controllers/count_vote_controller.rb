@@ -17,6 +17,6 @@ class CountVoteController < ApplicationController
     result_tweets = source_tweets
 
     @kaminari_page_per = 10
-    @kaminaried_tweets = Kaminari.paginate_array(result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari.paginate_array(result_tweets).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
   end
 end

@@ -31,4 +31,7 @@ Rails.application.routes.draw do
 
   match '/count_vote' => 'count_vote#index', via: [ :get, :post ]
   resources :count_vote
+
+  match '/after_party' => 'after_party#index', via: [ :get, :post ]
+  resources :after_party
 end

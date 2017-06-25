@@ -103,8 +103,12 @@ class SuikodenElection2017Tweets
   def create_record_to_users(tweet)
     user = tweet.user
     profile_image_uri = user.profile_image_uri? ? user.profile_image_uri_https : "https://abs.twimg.com/sticky/default_profile_images/default_profile.png"
-    unless User.exists?(user_id: user.id) # HACK: UPSERT の方法を再検討
-      # exist_record = User.find_by_user_id(user.id)
+    if User.exists?(user_id: user.id) # HACK: UPSERT の方法を再検討
+      usr = User.where(user_id: user.id).first
+      usr.update_attribute(
+        profile_image_uri: profile_image_uri,
+      )
+    else
       User.create(
         user_id: user.id,
         screen_name: user.screen_name,
@@ -175,17 +179,47 @@ class SuikodenElection2017Tweets
     client
     tweet = @client.status(id)
   end
+
+  def get_users
+    users = User.find_by_sql([%Q{SELECT * FROM users ORDER BY id ASC}])
+  end
+
+  # puts @client.user?(users[0].user_id.to_i)
+  def muriyari_update
+    client
+    users = get_users
+
+    users.each_with_index do |user, i|
+      next unless @client.user?((user.user_id).to_i)
+      latest_user_image_uri = latest_user_image_uri((user.user_id).to_i)
+
+      user.update_attribute(
+        :profile_image_uri, latest_user_image_uri
+      )
+
+      if (i + 1) % 30 == 0
+        sleep(60)
+      end
+    end
+  end
+
+  def latest_user_image_uri(user_id)
+    user = @client.user(user_id)
+    user.profile_image_uri_https
+  end
 end
 
 obj = SuikodenElection2017Tweets.new
-tweet = obj.tweet_by_id("878851022428323840")
-# obj.create_record_to_attached_images(tweet)
-# obj.create_record_to_all_tables(tweet)
+obj.muriyari_update
 
-# https://twitter.com/gensosenkyo/status/878891904561143809
+# puts obj.get_users[0].user_id
+# puts obj.muriyari_update.profile_image_uri
+# puts obj.muriyari_update.profile_image_uri
 
-# 末尾尻切れツイートはメディア情報取れないし、そもそもメディア情報が内部的に存在していない
-# https://twitter.com/gensosenkyo/status/878848355467743232
-# https://twitter.com/gensosenkyo/status/878848433892843520
-# https://twitter.com/gensosenkyo/status/878848506307510272
+# tweet = obj.tweet_by_id("878921012213014529")
+# puts tweet.user.id
+# obj.create_record_to_users(tweet)
 
+####
+#### puts obj.tweet_by_user.profile_image_uri_https
+# puts obj.latest_usr_img("harck108")

@@ -16,6 +16,7 @@
 
               <%# コントローラやモデルがビューに入り込んでいる……しかも生の SQL という…… %>
               <% if tweet.is_attached_image? %>
+                <%# media_id の ORDER BY は一意性が保証されない…… %>
                 <% images_obj = Tweet.find_by_sql([%Q{SELECT * FROM attached_images WHERE tweet_id = ? ORDER BY media_id DESC}, tweet.tweet_id])
 %>
                 <% images_obj.each do |image_obj| %>
@@ -39,6 +40,40 @@
                 <%= image_tag '878848506307510272_01.jpg', width: 250 %>
                 <br><br>
                 <%= image_tag '878848506307510272_02.jpg', width: 250 %>
+                <br><br>
+              <% end %>
+              <% if tweet.tweet_id == "878901733627441152" %>
+                <%= image_tag '878901733627441152_01.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878901733627441152_02.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878901733627441152_03.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878901733627441152_04.jpg', width: 250 %>
+                <br><br>
+              <% end %>
+              <% if tweet.tweet_id == "878903448166649856" %>
+                <%= image_tag '878903448166649856_01.png', width: 250 %>
+                <br><br>
+                <%= image_tag '878903448166649856_02.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878903448166649856_03.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878903448166649856_04.jpg', width: 250 %>
+                <br><br>
+              <% end %>
+              <% if tweet.tweet_id == "878904534977966080" %>
+                <%= image_tag '878904534977966080_01.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878904534977966080_02.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878904534977966080_03.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878904534977966080_04.jpg', width: 250 %>
+                <br><br>
+              <% end %>
+              <% if tweet.tweet_id == "878909511007821824" %>
+                <%= image_tag '878909511007821824_01.jpg', width: 250 %>
                 <br><br>
               <% end %>
 

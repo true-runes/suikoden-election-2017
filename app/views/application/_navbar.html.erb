@@ -11,10 +11,12 @@
       </div>
       <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
-          <li class="dropdown<% concat ' active' if controller.controller_name == 'count_vote' %>">
+          <li class="dropdown<% concat ' active' if controller.controller_name == 'count_vote' || controller.controller_name == 'after_party' %>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">開票関連 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
+              <li><a href="#">開票結果（建設中）</a></li>
               <li<% concat ' class="active"'.html_safe if controller.controller_name == "count_vote" %>><%= link_to '開票ツイート', { controller: :count_vote, action: :index } %></li>
+              <li<% concat ' class="active"'.html_safe if controller.controller_name == "after_party" %>><%= link_to '#幻水総選挙2017後夜祭', { controller: :after_party, action: :index } %></li>
             </ul>
           </li>
           <li class="dropdown<% concat ' active' if controller.controller_name == 'how_to_vote' || controller.controller_name == 'check_vote' || controller.controller_name == 'tweet_as_vote' || controller.controller_name == 'tweet_as_pr' %>">
@@ -30,9 +32,12 @@
           <li class="dropdown<% concat ' active' if controller.controller_name == 'index' && controller.action_name == 'thanks' %>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">その他 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><%= link_to '集計者用ページ', { controller: :for_members, action: :index } %></li>
               <li<% concat ' class="active"'.html_safe if controller.controller_name == 'index' && controller.action_name == 'thanks' %>><%= link_to 'Thanks', { controller: :index, action: :thanks } %></li>
+              <li><%= link_to '集計者用ページ', { controller: :for_members, action: :index } %></li>
             </ul>
+          </li>
+          <li>
+            <a href="#" style="color: red;">アイコン不具合反映待ち</a>
           </li>
         </ul>
       </div>
