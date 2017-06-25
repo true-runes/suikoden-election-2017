@@ -16,12 +16,30 @@
 
               <%# コントローラやモデルがビューに入り込んでいる……しかも生の SQL という…… %>
               <% if tweet.is_attached_image? %>
-                <% images_obj = Tweet.find_by_sql([%Q{SELECT * FROM attached_images WHERE tweet_id = ? ORDER BY media_id ASC}, tweet.tweet_id])
+                <% images_obj = Tweet.find_by_sql([%Q{SELECT * FROM attached_images WHERE tweet_id = ? ORDER BY media_id DESC}, tweet.tweet_id])
 %>
                 <% images_obj.each do |image_obj| %>
-                  <%= image_tag image_obj.uri, width: 400 %>
+                  <%= image_tag image_obj.uri, width: 250 %>
                   <br><br>
                 <% end %>
+              <% end %>
+
+              <%# 超法規的措置 %>
+              <% if tweet.tweet_id == "878848355467743232" %>
+                <%= image_tag '878848355467743232_01.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878848355467743232_02.jpg', width: 250 %>
+                <br><br>
+              <% end %>
+              <% if tweet.tweet_id == "878848433892843520" %>
+                <%= image_tag '878848433892843520_01.jpg', width: 250 %>
+                <br><br>
+              <% end %>
+              <% if tweet.tweet_id == "878848506307510272" %>
+                <%= image_tag '878848506307510272_01.jpg', width: 250 %>
+                <br><br>
+                <%= image_tag '878848506307510272_02.jpg', width: 250 %>
+                <br><br>
               <% end %>
 
               <%= link_to source_tweet_message, "#{tweet.uri}" %>

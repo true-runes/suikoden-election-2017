@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # HACK: below, not RESTful...
   get '/', to: 'index#index'
+  get '/thanks', to: 'index#thanks'
+
   resources :how_to_vote
   resources :tweet_as_vote
   resources :tweet_as_pr

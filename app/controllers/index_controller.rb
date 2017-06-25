@@ -19,4 +19,8 @@ class IndexController < ApplicationController
 
     @vote_amount = select_tweets_by_hashtag(amount_tweets, "幻水総選挙2017投票").length
   end
+
+  def thanks
+    @thanks_attend = "すべての参加者のみなさま"
+  end
 end

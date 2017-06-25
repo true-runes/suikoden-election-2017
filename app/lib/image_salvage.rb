@@ -127,18 +127,16 @@ class SuikodenElection2017Tweets
     end
   end
 
-  # リツイートは記録してはいけない（そうすれば media_id は重複しないと思われる）
   def create_record_to_attached_images(tweet)
     attrs = attached_image_attrs(tweet)
     attrs.each do |attr|
       # unless AttachedImage.where(media_id: attr[:media_id]).exists? # HACK: UPSERT の方法を再検討
-      unless tweet.retweet?
         AttachedImage.create(
           tweet_id: tweet.id,
           media_id: attr[:media_id],
           uri: attr[:uri],
         )
-      end
+      # end
     end
   end
 
@@ -172,7 +170,20 @@ class SuikodenElection2017Tweets
     create_record_by_hashtag("#幻水総選挙2017投票 OR #幻水総選挙2017 OR #幻水総選挙 OR #幻水総選挙運動 OR #幻水総選挙2017後夜祭")
     # back_create_record_by_hashtag("#幻水総選挙2017投票 OR #幻水総選挙2017 OR #幻水総選挙 OR #幻水総選挙運動")
   end
+
+  def tweet_by_id(id)
+    client
+    tweet = @client.status(id)
+  end
 end
 
 obj = SuikodenElection2017Tweets.new
-obj.collect_tweet
+tweet = obj.tweet_by_id("878848355467743232")
+# obj.create_record_to_attached_images(tweet)
+
+# 末尾尻切れツイートはメディア情報取れないし、そもそもメディア情報が内部的に存在していない
+# https://twitter.com/gensosenkyo/status/878848355467743232
+# https://twitter.com/gensosenkyo/status/878848433892843520
+# https://twitter.com/gensosenkyo/status/878848506307510272
+
+# obj.create_record_to_all_tables(tweet)
