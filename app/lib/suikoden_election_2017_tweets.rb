@@ -167,7 +167,7 @@ class SuikodenElection2017Tweets
 
   def collect_tweet
     client
-    create_record_by_hashtag("#幻水総選挙2017投票 OR #幻水総選挙2017 OR #幻水総選挙 OR #幻水総選挙運動")
+    create_record_by_hashtag("#幻水総選挙2017投票 OR #幻水総選挙2017 OR #幻水総選挙 OR #幻水総選挙運動 OR #幻水総選挙2017後夜祭")
     # back_create_record_by_hashtag("#幻水総選挙2017投票 OR #幻水総選挙2017 OR #幻水総選挙 OR #幻水総選挙運動")
   end
 end
