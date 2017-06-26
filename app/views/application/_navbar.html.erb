@@ -11,10 +11,10 @@
       </div>
       <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
-          <li class="dropdown<% concat ' active' if controller.controller_name == 'count_vote' || controller.controller_name == 'after_party' %>">
+          <li class="dropdown<% concat ' active' if controller.controller_name == 'count_vote' || controller.controller_name == 'after_party' || (controller.controller_name == 'index' && controller.action_name == 'final_rank') %>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">開票関連 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">開票結果（建設中）</a></li>
+              <li<% concat ' class="active"'.html_safe if controller.controller_name == 'index' && controller.action_name == 'final_rank' %>><%= link_to '最終開票結果', { controller: :index, action: :final_rank } %></li>
               <li<% concat ' class="active"'.html_safe if controller.controller_name == "count_vote" %>><%= link_to '開票ツイート', { controller: :count_vote, action: :index } %></li>
               <li<% concat ' class="active"'.html_safe if controller.controller_name == "after_party" %>><%= link_to '#幻水総選挙2017後夜祭', { controller: :after_party, action: :index } %></li>
             </ul>

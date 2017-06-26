@@ -1,3 +1,5 @@
+require 'csv'
+
 class IndexController < ApplicationController
   include TweetsJoinUsers
   include SelectTweetsByHashtag
@@ -22,5 +24,11 @@ class IndexController < ApplicationController
 
   def thanks
     @thanks_attend = "すべての参加者のみなさま"
+  end
+
+  def final_rank
+    filename = "suikoden_eleciton_2017_final_rank.csv"
+    filepath = Rails.root.join('public', filename) # フルパス表記と同じ
+    @table = CSV.table(filepath)
   end
 end
