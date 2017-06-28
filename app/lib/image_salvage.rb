@@ -4,6 +4,7 @@ class SuikodenElection2017Tweets
   require 'active_record'
   require 'mysql2'
   require 'yaml'
+  require 'pp'
 
   def client
     @client = Twitter::REST::Client.new do |config|
@@ -173,12 +174,18 @@ class SuikodenElection2017Tweets
 
   def tweet_by_id(id)
     client
+    # tweet = @client.status(id, tweet_mode: "extended")
     tweet = @client.status(id)
   end
 end
 
 obj = SuikodenElection2017Tweets.new
-tweet = obj.tweet_by_id("878851022428323840")
+tweet = obj.tweet_by_id(878909511007821824)
+puts tweet.attrs[:text]
+
+# 尻切れツイート例
+# https://twitter.com/gensosenkyo/status/878909511007821824
+
 # obj.create_record_to_attached_images(tweet)
 # obj.create_record_to_all_tables(tweet)
 
