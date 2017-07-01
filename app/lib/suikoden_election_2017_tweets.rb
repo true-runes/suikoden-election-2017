@@ -176,3 +176,6 @@ end
 
 obj = SuikodenElection2017Tweets.new
 obj.collect_tweet
+# tweet オブジェクトの retweeted_tweet メソッドを用いると、リツイート元の tweet オブジェクトが得られる
+# リツイートがリツイートされた回数とか Fav 数が得られるか？
+# 前者は無理っぽい、後者はよく分からない
