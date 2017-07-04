@@ -20,8 +20,8 @@
 # Learn more: http://github.com/javan/whenever
 # http://qiita.com/yumiyon/items/388fbb84450f49a6ab0d
 
-set :output, 'log/crontab.log'
-set :development, :production
+# set :output, 'log/crontab.log'
+# set :development, :production
 
-every 2.minutes do
-end
+# every 2.minutes do
+# end
