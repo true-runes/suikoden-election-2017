@@ -1,24 +1,25 @@
-# README
+# FIRST OF ALL
+- the source codes are ULTRA DIRTY ;;;;;(((((
+    - I wanna refactor strongly
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# URI
+- the URI of this app is below
+    - https://election.suikoden.info/
 
-Things you may want to cover:
+# Suikoden Election 2017
+- Suikoden is the JRPG as 幻想水滸伝 in Japanese
+- this app was used at the chracter election event of Suikoden
+    - it's not official event but the fan community event on Twitter
 
-* Ruby version
+# Specification
+- collect voted tweet with hashtag
+    - by cron
+- insert tweet data to database
+- show collected data on web
 
-* System dependencies
+# Usage
+under writing...
 
-* Configuration
+# LICENSE
+MIT LICENSE
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
