@@ -1,6 +1,7 @@
 # FIRST OF ALL
 - the source codes are ULTRA DIRTY ;;;;;(((((
     - I wanna refactor strongly
+    - especially, SQL is written as RAW...oh...DIRTY...
 
 # URI
 - the URI of this app is below
