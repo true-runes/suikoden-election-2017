@@ -1,3 +1,8 @@
+# CONCLUSION
+- This app is terrible and terrible
+- so I re-build as [`Suikoden election 2018`](https://github.com/corselia/suikoden-election-2018)
+    - please ref it...
+
 # FIRST OF ALL
 - the source codes are ULTRA DIRTY ;;;;;(((((
     - I wanna refactor strongly
