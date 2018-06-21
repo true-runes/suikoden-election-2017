@@ -1,24 +1,31 @@
-# README
+# CONCLUSION
+- This app is terrible and terrible
+- so I re-build as [`Suikoden election 2018`](https://github.com/corselia/suikoden-election-2018)
+    - please ref it...
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# FIRST OF ALL
+- the source codes are ULTRA DIRTY ;;;;;(((((
+    - I wanna refactor strongly
+    - especially, SQL is written as RAW...oh...DIRTY...
 
-Things you may want to cover:
+# URI
+- the URI of this app is below
+    - https://election.suikoden.info/
 
-* Ruby version
+# Suikoden Election 2017
+- Suikoden is the JRPG as 幻想水滸伝 in Japanese
+- this app was used at the chracter election event of Suikoden
+    - it's not official event but the fan community event on Twitter
 
-* System dependencies
+# Specification
+- collect voted tweet with hashtag
+    - by cron
+- insert tweet data to database
+- show collected data on web
 
-* Configuration
+# Usage
+under writing...
 
-* Database creation
+# LICENSE
+MIT LICENSE
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

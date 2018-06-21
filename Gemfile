@@ -53,6 +53,8 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+gem 'nokogiri', '>= 1.8.2'
+
 # suikoden_election_2017
 gem 'twitter'
 gem 'mysql2' # need `$ sudo apt-get install libmysqlclient-dev`
