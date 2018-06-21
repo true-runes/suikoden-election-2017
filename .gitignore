@@ -3,7 +3,7 @@ capybara-*.html
 .rspec
 /log
 /tmp
-/db/*.sqlite3
+
 /db/*.sqlite3-journal
 /public/system
 /coverage/
@@ -51,3 +51,4 @@ config/database.yml
 config/environments/development.rb
 app/lib/suikoden_election_2017_tweets.md
 public/assets/*
+.idea/
