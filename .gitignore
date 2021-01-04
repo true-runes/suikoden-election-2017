@@ -45,10 +45,9 @@ bower.json
 
 # below, depend on my own env
 snippet.md
-.ruby-version
 config/secrets.yml
-config/database.yml
 config/environments/development.rb
 app/lib/suikoden_election_2017_tweets.md
 public/assets/*
 .idea/
+.env
