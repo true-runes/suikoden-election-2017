@@ -1,0 +1,12 @@
+on: [push]
+name: Suikoden Election 2017
+jobs:
+  eiyuden_chronicle_rewards_github_actions:
+    name: Suikoden Election 2017 CI
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:2.6.6
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: bundle install
