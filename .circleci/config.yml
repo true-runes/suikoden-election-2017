@@ -6,12 +6,17 @@ jobs:
       environment:
       - RAILS_ENV: test
       - SELENIUM_CHROME_HEADLESS: true
+      - MYSQL_HOST: 127.0.0.1
+      - MYSQL_PORT: 3306
+      - MYSQL_USERNAME: root
+      - MYSQL_PASSWORD: root
+      - MYSQL_DATABASE: suikoden_election_2017_test
     - image: circleci/mysql:5.7.22
       environment:
         MYSQL_USER: root
         MYSQL_ROOT_PASSWORD: root
         MYSQL_PORT: 3306
-        MYSQL_DATABASE: suikoden_election_2018_test
+        MYSQL_DATABASE: suikoden_election_2017_test
     working_directory: ~/repo
     steps:
     - checkout
