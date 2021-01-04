@@ -1,0 +1,73 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: circleci/ruby:2.6.6-node-browsers-legacy
+      environment:
+      - RAILS_ENV: test
+      - SELENIUM_CHROME_HEADLESS: true
+    - image: circleci/mysql:5.7.22
+      environment:
+        MYSQL_USER: root
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_PORT: 3306
+        MYSQL_DATABASE: suikoden_election_2018_test
+    working_directory: ~/repo
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+        - v1-dependencies-
+    - run:
+        name: Install system dependencies
+        command: |
+          sudo apt-get install fonts-migmix
+    - run:
+        name: Install Chrome
+        command: |
+          sudo apt-get update
+          sudo apt install -y libappindicator3-1
+          sudo apt-get install -y libvulkan1 udev libudev1 libu2f-udev libgbm1 libwayland-server0
+
+          curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome.deb
+          sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+          rm google-chrome.deb
+          /opt/google/chrome/google-chrome --version
+    - run:
+        name: Install appropriate version's Bundler whose number is written in 'Gemfile.lock'
+        command: |
+          gem install bundler:1.17.3
+    - run:
+        name: Install gems written in Gemfile
+        command: |
+          bundle install --jobs=4 --retry=3 --path vendor/bundle
+    - run:
+        name: Execute yarn install
+        # TODO: 調整の必要あり
+        command: yarn install
+    - save_cache:
+        key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+        paths:
+          - vendor/bundle
+          - node_modules
+    - run:
+        name: Wait for booting DBMS
+        command: dockerize -wait tcp://127.0.0.1:3306 -timeout 10s
+    # TODO: 現状、1,000件 以上あるのでいったんコメントアウト
+    # - run:
+    #     # db:migrate の前に実行しておかないと Schemafile の ダブルクォート でコケる
+    #     name: Execute RuboCop
+    #     command: bundle exec rubocop
+    - run:
+        name: Setup database
+        command: bin/rails db:create; bin/rails db:migrate;
+    # 現状、rails_helper が無い
+    # - run:
+    #     name: Run Rails Test
+    #     command: |
+    #       mkdir /tmp/test-results
+    #       bundle exec rspec --format progress \
+    #                       $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+    #     when: always # RuboCopは失敗しても通す（WARNING以上は落としてもいいかもしれない）
