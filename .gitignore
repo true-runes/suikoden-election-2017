@@ -51,3 +51,5 @@ app/lib/suikoden_election_2017_tweets.md
 public/assets/*
 .idea/
 .env
+
+/config/master.key

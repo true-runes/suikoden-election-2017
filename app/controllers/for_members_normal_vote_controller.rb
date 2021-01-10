@@ -9,7 +9,7 @@ class ForMembersNormalVoteController < ApplicationController
 
   def site_http_basic_authenticate_with
     authenticate_or_request_with_http_basic("Hello, gensosenkyo staff!") do |username, password|
-      username == Rails.application.secrets.members_page_auth_username && password == Rails.application.secrets.members_page_auth_password
+      username == ENV['MEMBERS_PAGE_AUTH_USERNAME'] && password == ENV['MEMBERS_PAGE_AUTH_PASSWORD']
     end
   end
 
