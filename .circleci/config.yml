@@ -22,7 +22,8 @@ jobs:
     - checkout
     - restore_cache:
         keys:
-        - v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+        # - v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+        - v1-dependencies-{{ checksum "Gemfile.lock" }}
         - v1-dependencies-
     - run:
         name: Install system dependencies
@@ -53,10 +54,11 @@ jobs:
         # TODO: 調整の必要あり
         command: yarn install
     - save_cache:
-        key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+        # key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+        key: v1-dependencies-{{ checksum "Gemfile.lock" }}
         paths:
           - vendor/bundle
-          - node_modules
+          # - node_modules
     - run:
         name: Wait for booting DBMS
         command: dockerize -wait tcp://127.0.0.1:3306 -timeout 10s
