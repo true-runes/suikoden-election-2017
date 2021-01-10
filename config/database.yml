@@ -1,6 +1,9 @@
 default: &default
   adapter: mysql2
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
   encoding: utf8mb4
+  strict: false
   host: <%= ENV.fetch('MYSQL_HOST') %>
   port: <%= ENV.fetch('MYSQL_PORT') %>
   username: <%= ENV.fetch('MYSQL_USERNAME') %>
@@ -8,16 +11,24 @@ default: &default
 
 development:
   <<: *default
-  database: suikoden_election_2017_development
+  host: <%= ENV['MYSQL_HOST_DEVELOPMENT'] || ENV.fetch('MYSQL_HOST') %>
+  port: <%= ENV['MYSQL_PORT_DEVELOPMENT'] || ENV.fetch('MYSQL_PORT') %>
+  username: <%= ENV['MYSQL_USERNAME_DEVELOPMENT'] || ENV.fetch('MYSQL_USERNAME') %>
+  password: <%= ENV['MYSQL_PASSWORD_DEVELOPMENT'] || ENV.fetch('MYSQL_PASSWORD') %>
+  database: <%= ENV['MYSQL_DATABASE_DEVELOPMENT'] || 'suikoden_election_2017_development' %>
 
 production:
   <<: *default
-  database: suikoden_election_2017_production
+  host: <%= ENV['MYSQL_HOST_PRODUCTION'] || ENV.fetch('MYSQL_HOST') %>
+  port: <%= ENV['MYSQL_PORT_PRODUCTION'] || ENV.fetch('MYSQL_PORT') %>
+  username: <%= ENV['MYSQL_USERNAME_PRODUCTION'] || ENV.fetch('MYSQL_USERNAME') %>
+  password: <%= ENV['MYSQL_PASSWORD_PRODUCTION'] || ENV.fetch('MYSQL_PASSWORD') %>
+  database: <%= ENV['MYSQL_DATABASE_PRODUCTION'] || 'suikoden_election_2017_production' %>
 
 test:
   <<: *default
-  host: 127.0.0.1
-  port: 3306
-  username: root
-  password: root
-  database: suikoden_election_2017_test
+  host: <%= ENV['MYSQL_HOST_TEST'] || '127.0.0.1' %>
+  port: <%= ENV['MYSQL_PORT_TEST'] || 3306 %>
+  username: <%= ENV['MYSQL_USERNAME_TEST'] || 'root' %>
+  password: <%= ENV['MYSQL_PASSWORD_TEST'] || 'root' %>
+  database: <%= ENV['MYSQL_DATABASE_TEST'] || 'suikoden_election_2017_test' %>
