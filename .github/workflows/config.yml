@@ -8,5 +8,12 @@ jobs:
       image: ruby:2.6.6
     steps:
     - uses: actions/checkout@v2
+    - name: Bundler cache
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gem-
     - name: Install dependencies
       run: bundle install
