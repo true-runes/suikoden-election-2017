@@ -24,8 +24,10 @@
             <ul class="dropdown-menu" role="menu">
               <li<% concat ' class="active"'.html_safe if controller.controller_name == "how_to_vote" %>><%= link_to '投票方法', { controller: :how_to_vote, action: :index } %></li>
               <li<% concat ' class="active"'.html_safe if controller.controller_name == "check_vote" %>><%= link_to '投票チェック', { controller: :check_vote, action: :index } %></li>
-              <li<% concat ' class="active"'.html_safe if controller.controller_name == "tweet_as_vote" %>><%= link_to '#幻水総選挙2017投票', { controller: :tweet_as_vote, action: :index } %></li>
-              <li<% concat ' class="active"'.html_safe if controller.controller_name == "tweet_as_pr" %>><%= link_to '#幻水総選挙運動', { controller: :tweet_as_pr, action: :index } %></li>
+
+              <%# FIXME: 全数をデータベースから読み込んで処理をしているため、重くて処理が終わらないので、ページを封鎖 %>
+              <%# = link_to '#幻水総選挙2017投票', { controller: :tweet_as_vote, action: :index } %>
+              <%# = link_to '#幻水総選挙運動', { controller: :tweet_as_pr, action: :index } %>
             </ul>
           </li>
           <li class="dropdown">
