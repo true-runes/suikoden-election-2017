@@ -9,7 +9,7 @@ class ForMembersCheckVoteController < ApplicationController
 
   def show
     authenticate_or_request_with_http_basic("Hello, gensosenkyo staff!") do |username, password|
-      username == Rails.application.secrets.members_page_auth_username && password == Rails.application.secrets.members_page_auth_password
+      username == ENV['MEMBERS_PAGE_AUTH_USERNAME'] && password == ENV['MEMBERS_PAGE_AUTH_PASSWORD']
     end
 
     @screen_name = params[:search_tw_id].nil? ? "" : params[:search_tw_id].gsub(/@/, "")
@@ -32,7 +32,7 @@ class ForMembersCheckVoteController < ApplicationController
 
   def result
     authenticate_or_request_with_http_basic("Hello, gensosenkyo staff!") do |username, password|
-      username == Rails.application.secrets.members_page_auth_username && password == Rails.application.secrets.members_page_auth_password
+      username == ENV['MEMBERS_PAGE_AUTH_USERNAME'] && password == ENV['MEMBERS_PAGE_AUTH_PASSWORD']
     end
 
     @screen_name = params[:search_tw_id].nil? ? "" : params[:search_tw_id].gsub(/@/, "")

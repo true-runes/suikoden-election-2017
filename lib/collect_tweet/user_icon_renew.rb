@@ -7,11 +7,10 @@ class SuikodenElection2017Tweets
 
   def client
     @client = Twitter::REST::Client.new do |config|
-      twitter_api_config = YAML.load_file('config/secrets.yml')
-      config.consumer_key        = twitter_api_config["shared"]["twitter_consumer_key"]
-      config.consumer_secret     = twitter_api_config["shared"]["twitter_consumer_secret"]
-      config.access_token        = twitter_api_config["shared"]["twitter_access_token"]
-      config.access_token_secret = twitter_api_config["shared"]["twitter_access_token_secret"]
+      config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
+      config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
+      config.access_token        = ENV['TWITTER_ACCESS_TOKEN']
+      config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
     end
   end
 
