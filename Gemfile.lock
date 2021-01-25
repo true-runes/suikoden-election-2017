@@ -83,7 +83,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.7)
+    concurrent-ruby (1.1.8)
     crass (1.0.6)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -113,7 +113,7 @@ GEM
     http_parser.rb (0.6.0)
     i18n (1.8.7)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.10.1)
+    jbuilder (2.11.1)
       activesupport (>= 5.0.0)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
@@ -261,7 +261,7 @@ DEPENDENCIES
   capybara (~> 3.34)
   coffee-rails (~> 5.0)
   dotenv-rails
-  jbuilder (~> 2.10)
+  jbuilder (~> 2.11)
   kaminari
   listen (>= 3.0.5, < 3.5)
   mysql2
