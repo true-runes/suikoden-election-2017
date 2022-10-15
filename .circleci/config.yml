@@ -14,8 +14,9 @@ jobs:
       - MYSQL_DATABASE: suikoden_election_2017_test
     - image: cimg/mysql:5.7.38
       environment:
-        MYSQL_USER: root
-        MYSQL_ROOT_PASSWORD: root
+        MYSQL_USER: gss2017
+        MYSQL_PASSWORD: gss2017_pasword
+        MYSQL_ROOT_PASSWORD: root_password
         MYSQL_PORT: 3306
         MYSQL_DATABASE: suikoden_election_2017_test
     working_directory: ~/repo
