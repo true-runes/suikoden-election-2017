@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   build:
     docker:
@@ -11,7 +12,7 @@ jobs:
       - MYSQL_USERNAME: root
       - MYSQL_PASSWORD: root
       - MYSQL_DATABASE: suikoden_election_2017_test
-    - image: circleci/mysql:5.7.22
+    - image: cimg/mysql:5.7.38
       environment:
         MYSQL_USER: root
         MYSQL_ROOT_PASSWORD: root
@@ -22,7 +23,6 @@ jobs:
     - checkout
     - restore_cache:
         keys:
-        # - v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
         - v1-dependencies-{{ checksum "Gemfile.lock" }}
         - v1-dependencies-
     - run:
@@ -52,14 +52,11 @@ jobs:
           bundle install --jobs=4 --retry=3 --path vendor/bundle
     - run:
         name: Execute yarn install
-        # TODO: 調整の必要あり
         command: yarn install
     - save_cache:
-        # key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
         key: v1-dependencies-{{ checksum "Gemfile.lock" }}
         paths:
           - vendor/bundle
-          # - node_modules
     - run:
         name: Wait for booting DBMS
         command: dockerize -wait tcp://127.0.0.1:3306 -timeout 10s
