@@ -7,9 +7,10 @@ class ForMembersAllVoteController < ApplicationController
   layout 'application_members'
 
   def index
-    authenticate_or_request_with_http_basic("Hello, gensosenkyo staff!") do |username, password|
+    authenticate_or_request_with_http_basic('Hello, gensosenkyo staff!') do |username, password|
       username == ENV['MEMBERS_PAGE_AUTH_USERNAME'] && password == ENV['MEMBERS_PAGE_AUTH_PASSWORD']
     end
+
     for_get_method if request.get?
     for_post_method(params[:search_word]) if request.post?
   end
@@ -29,10 +30,12 @@ class ForMembersAllVoteController < ApplicationController
     end
 
     @kaminari_page_per = 20
-    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+
+    # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per)
   end
 
-  def for_post_method(search_word)
+  def for_post_method(search_word) # rubocop:disable Metrics/AbcSize
     source_tweets = without_retweets
 
     # TODO: コントローラに詰め込みすぎ
@@ -53,6 +56,11 @@ class ForMembersAllVoteController < ApplicationController
     end
 
     @kaminari_page_per = 20
-    @kaminaried_tweets = Kaminari.paginate_array(@lastest_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+
+    # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari
+                         .paginate_array(@lastest_result_tweets.reverse)
+                         .page(params[:page])
+                         .per(@kaminari_page_per)
   end
 end

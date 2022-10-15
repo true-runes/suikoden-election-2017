@@ -7,12 +7,12 @@ class ForMembersCheckVoteController < ApplicationController
   layout 'application_members'
   # before_action :site_http_basic_authenticate_with
 
-  def show
-    authenticate_or_request_with_http_basic("Hello, gensosenkyo staff!") do |username, password|
+  def show # rubocop:disable Metrics/AbcSize
+    authenticate_or_request_with_http_basic('Hello, gensosenkyo staff!') do |username, password|
       username == ENV['MEMBERS_PAGE_AUTH_USERNAME'] && password == ENV['MEMBERS_PAGE_AUTH_PASSWORD']
     end
 
-    @screen_name = params[:search_tw_id].nil? ? "" : params[:search_tw_id].gsub(/@/, "")
+    @screen_name = params[:search_tw_id].nil? ? '' : params[:search_tw_id].gsub(/@/, '')
     source_tweets = tweets_by_specific_user(@screen_name)
 
     # TODO: コントローラに詰め込みすぎ
@@ -27,15 +27,17 @@ class ForMembersCheckVoteController < ApplicationController
     end
 
     @kaminari_page_per = 20
-    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+
+    # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per)
   end
 
-  def result
-    authenticate_or_request_with_http_basic("Hello, gensosenkyo staff!") do |username, password|
+  def result # rubocop:disable Metrics/AbcSize
+    authenticate_or_request_with_http_basic('Hello, gensosenkyo staff!') do |username, password|
       username == ENV['MEMBERS_PAGE_AUTH_USERNAME'] && password == ENV['MEMBERS_PAGE_AUTH_PASSWORD']
     end
 
-    @screen_name = params[:search_tw_id].nil? ? "" : params[:search_tw_id].gsub(/@/, "")
+    @screen_name = params[:search_tw_id].nil? ? '' : params[:search_tw_id].gsub(/@/, '')
     source_tweets = tweets_by_specific_user(@screen_name)
 
     # TODO: コントローラに詰め込みすぎ
@@ -50,6 +52,8 @@ class ForMembersCheckVoteController < ApplicationController
     end
 
     @kaminari_page_per = 20
-    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+
+    # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per)
   end
 end

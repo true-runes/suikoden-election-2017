@@ -11,12 +11,15 @@ class CountVoteController < ApplicationController
   end
 
   private
+
   # hyper dirty code...
   def show_count_vote_tweet
-    source_tweets = tweets_by_specific_user_limited_count_vote_period("gensosenkyo")
+    source_tweets = tweets_by_specific_user_limited_count_vote_period('gensosenkyo')
     result_tweets = source_tweets
 
     @kaminari_page_per = 10
-    @kaminaried_tweets = Kaminari.paginate_array(result_tweets).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+
+    # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari.paginate_array(result_tweets).page(params[:page]).per(@kaminari_page_per)
   end
 end

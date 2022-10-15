@@ -8,7 +8,7 @@ class ForMembersNormalVoteController < ApplicationController
   before_action :site_http_basic_authenticate_with
 
   def site_http_basic_authenticate_with
-    authenticate_or_request_with_http_basic("Hello, gensosenkyo staff!") do |username, password|
+    authenticate_or_request_with_http_basic('Hello, gensosenkyo staff!') do |username, password|
       username == ENV['MEMBERS_PAGE_AUTH_USERNAME'] && password == ENV['MEMBERS_PAGE_AUTH_PASSWORD']
     end
   end
