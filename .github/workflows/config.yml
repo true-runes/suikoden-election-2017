@@ -23,10 +23,3 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true
-    - name: $ bundle install を行う
-      uses: actions/cache@v3
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gem-
