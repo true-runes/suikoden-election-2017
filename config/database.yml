@@ -29,6 +29,6 @@ test:
   <<: *default
   host: <%= ENV['MYSQL_HOST_TEST'] || '127.0.0.1' %>
   port: <%= ENV['MYSQL_PORT_TEST'] || 3306 %>
-  username: <%= ENV['MYSQL_USERNAME_TEST'] || 'root' %>
-  password: <%= ENV['MYSQL_PASSWORD_TEST'] || 'root' %>
+  username: <%= ENV['MYSQL_USERNAME_TEST'] || 'gss2017' %>
+  password: <%= ENV['MYSQL_PASSWORD_TEST'] || 'gss2017_pasword' %>
   database: <%= ENV['MYSQL_DATABASE_TEST'] || 'suikoden_election_2017_test' %>
