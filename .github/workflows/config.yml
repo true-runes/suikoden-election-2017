@@ -1,23 +1,32 @@
-on: [push]
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - 'v*.*.*'
+  workflow_dispatch:
+
 name: Suikoden Election 2017
+
 jobs:
   suikoden_election_2017_github_actions:
     name: Suikoden Election 2017 CI
     runs-on: ubuntu-latest
-    container:
-      image: ruby:2.6.6
+    strategy:
+      matrix:
+        ruby-version: ['2.6.6']
     steps:
-    - uses: actions/checkout@v2
-    - name: Bundler cache
-      uses: actions/cache@v2
+    - name: コードをチェックアウトする
+      uses: actions/checkout@v3
+    - name: Ruby のセットアップを行う
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true
+    - name: $ bundle install を行う
+      uses: actions/cache@v3
       with:
         path: vendor/bundle
         key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gem-
-    - name: Install appropriate version's Bundler
-      run: gem install bundler:1.17.3
-    - name: $ bundle install
-      run: |
-        bundle config path vendor/bundle
-        bundle _1.17.3_ install --jobs=4 --retry=3
