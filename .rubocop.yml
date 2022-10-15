@@ -1,0 +1,51 @@
+# inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+
+AllCops:
+  NewCops: enable
+  DisplayCopNames: true
+  Exclude:
+  - 'vendor/**/*'
+  - 'node_modules/**/*'
+  - 'spec/**/*'
+  - 'db/schema.rb'
+  - 'db/**/*'
+  - 'config/**/*'
+  - 'Guardfile'
+  - 'bin/**/*'
+  - 'tmp/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Metrics/BlockLength:
+  Max: 52
+
+Metrics/ClassLength:
+  Max: 500
+
+Metrics/CyclomaticComplexity:
+  Max: 16
+
+Metrics/MethodLength:
+  Max: 65
+
+Metrics/PerceivedComplexity:
+  Max: 17
+
+Metrics/ModuleLength:
+  Max: 160

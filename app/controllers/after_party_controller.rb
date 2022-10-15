@@ -11,25 +11,24 @@ class AfterPartyController < ApplicationController
   end
 
   private
-    def after_party_get_method
+
+  def after_party_get_method # rubocop:disable Metrics/AbcSize
     # ex. https://twitter.com/nyaka_y/status/874979736308416512
-    all_records = Hashtag.all.map { |rec| rec.attributes }
+    all_records = Hashtag.all.map(&:attributes)
     @all_rec_tweet_ids = []
     all_records.each do |record|
-      @all_rec_tweet_ids << record["tweet_id"]
+      @all_rec_tweet_ids << record['tweet_id']
     end
 
-    tag_records = Hashtag.where(tagname: "幻水総選挙2017後夜祭").map { |rec| rec.attributes }
+    tag_records = Hashtag.where(tagname: '幻水総選挙2017後夜祭').map(&:attributes)
     @tag_rec_tweet_ids = []
     tag_records.each do |record|
-      @tag_rec_tweet_ids << record["tweet_id"]
+      @tag_rec_tweet_ids << record['tweet_id']
     end
 
     @result_ids = []
     @tag_rec_tweet_ids.each do |tweet_id|
-      # if @all_rec_tweet_ids.count(tweet_id) == 1
-        @result_ids << tweet_id
-      # end
+      @result_ids << tweet_id
     end
 
     # tomochin = without_retweets_and_gensosenkyo_loose_limited_period # Array
@@ -54,6 +53,8 @@ class AfterPartyController < ApplicationController
     end
 
     @kaminari_page_per = 20
-    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+
+    # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets).page(params[:page]).per(@kaminari_page_per)
   end
 end

@@ -7,7 +7,7 @@ class ForMembersDuplicatedVoteController < ApplicationController
   layout 'application_members'
 
   def index
-    authenticate_or_request_with_http_basic("Hello, gensosenkyo staff!") do |username, password|
+    authenticate_or_request_with_http_basic('Hello, gensosenkyo staff!') do |username, password|
       username == ENV['MEMBERS_PAGE_AUTH_USERNAME'] && password == ENV['MEMBERS_PAGE_AUTH_PASSWORD']
     end
 
@@ -15,9 +15,9 @@ class ForMembersDuplicatedVoteController < ApplicationController
     for_post_method(params[:search_word]) if request.post?
   end
 
-  def for_get_method
+  def for_get_method # rubocop:disable Metrics/AbcSize
     tomochin = without_retweets_and_gensosenkyo_loose_limited_period # Array
-    selected_tomochin = select_tweets_by_hashtag(tomochin, "幻水総選挙2017投票", "幻水総選挙2017")
+    selected_tomochin = select_tweets_by_hashtag(tomochin, '幻水総選挙2017投票', '幻水総選挙2017')
 
     # まずは削除済みツイートを取り除くところから
     # TODO: コントローラに詰め込みすぎだし NOT DRY
@@ -32,10 +32,10 @@ class ForMembersDuplicatedVoteController < ApplicationController
       @removed_tweet_ids.include?(element.tweet_id)
     end
 
-    tomochan_hash = tomochan.map { |rec| rec.attributes }
+    tomochan_hash = tomochan.map(&:attributes)
     @target_screen_names = []
     tomochan_hash.each do |record|
-      @target_screen_names << record["screen_name"]
+      @target_screen_names << record['screen_name']
     end
 
     @result_1st = []
@@ -51,12 +51,14 @@ class ForMembersDuplicatedVoteController < ApplicationController
     end
 
     @kaminari_page_per = 20
-    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+
+    # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per)
   end
 
-  def for_post_method(search_word)
+  def for_post_method(search_word) # rubocop:disable Metrics/AbcSize
     tomochin = without_retweets_and_gensosenkyo_loose_limited_period # Array
-    selected_tomochin = select_tweets_by_hashtag(tomochin, "幻水総選挙2017投票", "幻水総選挙2017")
+    selected_tomochin = select_tweets_by_hashtag(tomochin, '幻水総選挙2017投票', '幻水総選挙2017')
 
     # まずは削除済みツイートを取り除くところから
     # TODO: コントローラに詰め込みすぎだし NOT DRY
@@ -71,10 +73,10 @@ class ForMembersDuplicatedVoteController < ApplicationController
       @removed_tweet_ids.include?(element.tweet_id)
     end
 
-    tomochan_hash = tomochan.map { |rec| rec.attributes }
+    tomochan_hash = tomochan.map(&:attributes)
     @target_screen_names = []
     tomochan_hash.each do |record|
-      @target_screen_names << record["screen_name"]
+      @target_screen_names << record['screen_name']
     end
 
     @result_1st = []
@@ -96,6 +98,11 @@ class ForMembersDuplicatedVoteController < ApplicationController
     end
 
     @kaminari_page_per = 20
-    @kaminaried_tweets = Kaminari.paginate_array(@lastest_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per) # HACK: 個別に設定を決めないようにする
+
+    # HACK: 個別に設定を決めないようにする
+    @kaminaried_tweets = Kaminari
+                         .paginate_array(@lastest_result_tweets.reverse)
+                         .page(params[:page])
+                         .per(@kaminari_page_per)
   end
 end

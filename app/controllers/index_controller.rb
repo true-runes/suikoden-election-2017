@@ -23,12 +23,12 @@ class IndexController < ApplicationController
   end
 
   def thanks
-    @thanks_attend = "すべての参加者のみなさま"
+    @thanks_attend = 'すべての参加者のみなさま'
   end
 
   def final_rank
-    filename = "suikoden_eleciton_2017_final_rank.csv"
-    filepath = Rails.root.join('public', filename) # フルパス表記と同じ
+    filename = 'suikoden_eleciton_2017_final_rank.csv'
+    filepath = Rails.public_path.join(filename) # フルパス表記と同じ
     @table = CSV.table(filepath)
   end
 end

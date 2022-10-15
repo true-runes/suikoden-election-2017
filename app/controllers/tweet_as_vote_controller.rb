@@ -5,7 +5,7 @@ class TweetAsVoteController < ApplicationController
   def index
     # source_tweets = without_retweets
     source_tweets = without_retweets_and_limited_period
-    selected_tweets = select_tweets_by_hashtag(source_tweets, "幻水総選挙2017投票")
+    selected_tweets = select_tweets_by_hashtag(source_tweets, '幻水総選挙2017投票')
 
     # TODO: コントローラに詰め込みすぎだし NOT DRY
     unreadable_tweet_ids = IsReadableTweet.where(is_readable: false)
