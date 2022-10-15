@@ -12,7 +12,7 @@ jobs:
       - MYSQL_USERNAME: root
       - MYSQL_PASSWORD: root
       - MYSQL_DATABASE: suikoden_election_2017_test
-    - image: cimg/mysql:5.7.38
+    - image: cimg/mysql:8.0.28
       environment:
         MYSQL_USER: gss2017
         MYSQL_PASSWORD: gss2017_pasword
