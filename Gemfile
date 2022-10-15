@@ -21,8 +21,7 @@ gem 'whenever', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'rubocop-rails'
 end
 
 group :development do
@@ -30,4 +29,12 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
   gem 'web-console'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', require: false
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
