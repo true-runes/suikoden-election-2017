@@ -1,34 +1,36 @@
 default: &default
-  adapter: mysql2
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV['RAILS_MAX_THREADS'] || 5 %>
   timeout: 5000
-  encoding: utf8mb4
   strict: false
-  host: <%= ENV.fetch('MYSQL_HOST') %>
-  port: <%= ENV.fetch('MYSQL_PORT') %>
-  username: <%= ENV.fetch('MYSQL_USERNAME') %>
-  password: <%= ENV.fetch('MYSQL_PASSWORD') %>
 
 development:
   <<: *default
-  host: <%= ENV['MYSQL_HOST_DEVELOPMENT'] || ENV.fetch('MYSQL_HOST') %>
-  port: <%= ENV['MYSQL_PORT_DEVELOPMENT'] || ENV.fetch('MYSQL_PORT') %>
-  username: <%= ENV['MYSQL_USERNAME_DEVELOPMENT'] || ENV.fetch('MYSQL_USERNAME') %>
-  password: <%= ENV['MYSQL_PASSWORD_DEVELOPMENT'] || ENV.fetch('MYSQL_PASSWORD') %>
-  database: <%= ENV['MYSQL_DATABASE_DEVELOPMENT'] || 'suikoden_election_2017_development' %>
+  host: <%= ENV['PG_HOST_DEVELOPMENT'] || 'localhost' %>
+  port: <%= ENV['PG_PORT_DEVELOPMENT'] || 5432 %>
+  username: <%= ENV['PG_USERNAME_DEVELOPMENT'] || 'root' %>
+  password: <%= ENV['PG_PASSWORD_DEVELOPMENT'] || 'password' %>
+  database: <%= ENV['PG_DATABASE_DEVELOPMENT'] || 'gss2017_development' %>
+  template: template0
+  collation: ja_JP.UTF-8
+  ctype: ja_JP.UTF-8
 
 production:
   <<: *default
-  host: <%= ENV['MYSQL_HOST_PRODUCTION'] || ENV.fetch('MYSQL_HOST') %>
-  port: <%= ENV['MYSQL_PORT_PRODUCTION'] || ENV.fetch('MYSQL_PORT') %>
-  username: <%= ENV['MYSQL_USERNAME_PRODUCTION'] || ENV.fetch('MYSQL_USERNAME') %>
-  password: <%= ENV['MYSQL_PASSWORD_PRODUCTION'] || ENV.fetch('MYSQL_PASSWORD') %>
-  database: <%= ENV['MYSQL_DATABASE_PRODUCTION'] || 'suikoden_election_2017_production' %>
+  host: <%= ENV['PG_HOST_PRODUCTION'] || 'localhost' %>
+  port: <%= ENV['PG_PORT_PRODUCTION'] || 5432 %>
+  username: <%= ENV['PG_USERNAME_PRODUCTION'] || 'root' %>
+  password: <%= ENV['PG_PASSWORD_PRODUCTION'] || 'password' %>
+  database: <%= ENV['PG_DATABASE_PRODUCTION'] || 'gss2017_production' %>
+  template: template0
+  collation: ja_JP.UTF-8
+  ctype: ja_JP.UTF-8
 
 test:
   <<: *default
-  host: <%= ENV['MYSQL_HOST_TEST'] || '127.0.0.1' %>
-  port: <%= ENV['MYSQL_PORT_TEST'] || 3306 %>
-  username: <%= ENV['MYSQL_USERNAME_TEST'] || 'gss2017' %>
-  password: <%= ENV['MYSQL_PASSWORD_TEST'] || 'gss2017_pasword' %>
-  database: <%= ENV['MYSQL_DATABASE_TEST'] || 'suikoden_election_2017_test' %>
+  host: <%= ENV['PG_HOST_TEST'] || 'localhost' %>
+  port: <%= ENV['PG_PORT_TEST'] || 5432 %>
+  username: <%= ENV['PG_USERNAME_TEST'] || 'gss2017' %>
+  password: <%= ENV['PG_PASSWORD_TEST'] || 'gss2017_password' %>
+  database: <%= ENV['PG_DATABASE_TEST'] || 'gss2017_test' %>
