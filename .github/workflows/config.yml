@@ -1,3 +1,5 @@
+name: 幻水総選挙2017
+
 on:
   push:
     branches:
@@ -6,20 +8,79 @@ on:
       - 'v*.*.*'
   workflow_dispatch:
 
-name: Suikoden Election 2017
+env:
+  # TODO: Git のタグを取得して、イメージのタグにする
+  DOCKER_IMAGE: asia-northeast1-docker.pkg.dev/${{ secrets.CLOUD_RUN_PROJECT }}/cloud-run-source-deploy/gensosenkyo-2017
+  GCP_REGION: ${{ secrets.CLOUD_RUN_REGION }}
+  RAILS_ENV: test
+  PG_HOST_TEST: localhost
+  PG_PORT_TEST: 5432
+  PG_USERNAME_TEST: postgres_user
+  PG_PASSWORD_TEST: postgres_password
 
 jobs:
-  suikoden_election_2017_github_actions:
-    name: Suikoden Election 2017 CI
+  rails_app_test:
+    name: Rails アプリのテスト
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['2.7.6', '3.0.4', '3.1.2']
+    services:
+      postgres:
+        image: postgres:15.1
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres_user
+          POSTGRES_PASSWORD: postgres_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
-    - name: コードをチェックアウトする
-      uses: actions/checkout@v3
-    - name: Ruby のセットアップを行う
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true
+      - name: コードをチェックアウトする
+        uses: actions/checkout@v3
+      - name: Ruby のセットアップを行う
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: データベースをセットアップする
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
+          bin/rails db:seed
+      - name: RSpec を実行する
+        run: |
+          bundle exec rspec
+
+  deploy_to_cloud_run:
+    needs: rails_app_test
+    if: ${{ github.ref_name == 'main' }}
+    name: Cloud Run に production デプロイする
+    runs-on: ubuntu-latest
+    steps:
+      - name: ソースコードをチェックアウトする
+        uses: actions/checkout@v3
+      - name: GCP の認証を行う
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}
+      - name: GCP の CLI の認証を行う
+        run: |
+          gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+      - name: Docker イメージ をビルドする
+        run: |
+          docker build -t ${{ env.DOCKER_IMAGE }} .
+      - name: Docker イメージ をプッシュする
+        run: |
+          docker push ${{ env.DOCKER_IMAGE }}
+      - name: ローカル環境での Ruby のセットアップを行う
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: cloud-run-sample-rails-app
+          image: ${{ env.DOCKER_IMAGE }}
+          region: ${{ env.GCP_REGION }}
