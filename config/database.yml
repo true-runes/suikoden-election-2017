@@ -2,8 +2,8 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV['RAILS_MAX_THREADS'] || 5 %>
-  timeout: 5000
-  strict: false
+  # timeout: 5000
+  # strict: false
 
 development:
   <<: *default
