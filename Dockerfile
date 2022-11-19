@@ -1,6 +1,9 @@
 FROM ruby:3.1.2
 ENV LANG C.UTF-8
 
+# TODO: development のときはどうするか
+ENV RAILS_ENV production
+
 RUN apt update -qq && apt install -y build-essential libpq-dev nodejs
 RUN gem install bundler
 RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
