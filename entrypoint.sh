@@ -6,9 +6,6 @@ if [ -n "$PORT" ]; then
   RAILS_PORT=$PORT
 fi
 
-# TODO: development のときはどうするか
-RAILS_ENV=production
-
 bin/rails assets:precompile
 bin/rails db:create
 bin/rails db:migrate
