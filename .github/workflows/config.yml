@@ -73,11 +73,6 @@ jobs:
       - name: Docker イメージ をプッシュする
         run: |
           docker push ${{ env.DOCKER_IMAGE }}
-      - name: ローカル環境での Ruby のセットアップを行う
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0
         with:
