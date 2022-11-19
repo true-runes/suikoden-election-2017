@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-RAILS_PORT=8080
+RAILS_PORT=3000
 
 if [ -n "$PORT" ]; then
   RAILS_PORT=$PORT
