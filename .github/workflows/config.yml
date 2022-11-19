@@ -57,6 +57,8 @@ jobs:
     if: ${{ github.ref_name == 'main' }}
     name: Cloud Run に production デプロイする
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: production
     steps:
       - name: ソースコードをチェックアウトする
         uses: actions/checkout@v3
