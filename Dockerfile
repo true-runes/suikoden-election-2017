@@ -1,9 +1,6 @@
 FROM ruby:3.1.2
 ENV LANG C.UTF-8
 
-# TODO: development のときはどうするか
-ENV RAILS_ENV production
-
 RUN apt update -qq && apt install -y build-essential libpq-dev nodejs
 RUN gem install bundler
 RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
@@ -19,7 +16,7 @@ COPY Gemfile.lock /myapp/Gemfile.lock
 
 RUN gem install bundler
 
-# TODO: 開発環境として Docker を利用する場合はどうするか
+# TODO: production ビルド前提なので、開発環境として Docker を利用する場合は Dockerfile を分ける
 RUN bundle config set --local without 'test development'
 RUN bundle install
 

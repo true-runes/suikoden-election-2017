@@ -2,8 +2,6 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV['RAILS_MAX_THREADS'] || 5 %>
-  # timeout: 5000
-  # strict: false
 
 development:
   <<: *default
@@ -11,7 +9,7 @@ development:
   port: <%= ENV['PG_PORT_DEVELOPMENT'] || 5432 %>
   username: <%= ENV['PG_USERNAME_DEVELOPMENT'] || 'root' %>
   password: <%= ENV['PG_PASSWORD_DEVELOPMENT'] || 'password' %>
-  database: <%= ENV['PG_DATABASE_DEVELOPMENT'] || 'gss2017_development' %>
+  database: gss2017_development
   template: template0
   collation: ja_JP.UTF-8
   ctype: ja_JP.UTF-8
@@ -22,7 +20,7 @@ production:
   port: <%= ENV['PG_PORT_PRODUCTION'] || 5432 %>
   username: <%= ENV['PG_USERNAME_PRODUCTION'] || 'root' %>
   password: <%= ENV['PG_PASSWORD_PRODUCTION'] || 'password' %>
-  database: 'gss2017_production'
+  database: gss2017_production
   template: template0
   collation: ja_JP.UTF-8
   ctype: ja_JP.UTF-8
@@ -33,4 +31,4 @@ test:
   port: <%= ENV['PG_PORT_TEST'] || 5432 %>
   username: <%= ENV['PG_USERNAME_TEST'] || 'gss2017' %>
   password: <%= ENV['PG_PASSWORD_TEST'] || 'gss2017_password' %>
-  database: <%= ENV['PG_DATABASE_TEST'] || 'gss2017_test' %>
+  database: gss2017_test

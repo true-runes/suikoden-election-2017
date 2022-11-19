@@ -12,6 +12,8 @@ env:
   # TODO: Git のタグを取得して、イメージのタグにする
   DOCKER_IMAGE: asia-northeast1-docker.pkg.dev/${{ secrets.CLOUD_RUN_PROJECT }}/cloud-run-source-deploy/gensosenkyo-2017
   GCP_REGION: ${{ secrets.CLOUD_RUN_REGION }}
+  GCP_AUTH_HOST: asia-northeast1-docker.pkg.dev
+  CLOUD_RUN_SERVICE_NAME: gensosenkyo-2017
   RAILS_ENV: test
   PG_HOST_TEST: localhost
   PG_PORT_TEST: 5432
@@ -57,8 +59,6 @@ jobs:
     if: ${{ github.ref_name == 'main' }}
     name: Cloud Run に production デプロイする
     runs-on: ubuntu-latest
-    env:
-      RAILS_ENV: production
     steps:
       - name: ソースコードをチェックアウトする
         uses: actions/checkout@v3
@@ -68,7 +68,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}
       - name: GCP の CLI の認証を行う
         run: |
-          gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+          gcloud auth configure-docker ${{ env.GCP_AUTH_HOST }}
       - name: Docker イメージ をビルドする
         run: |
           docker build -t ${{ env.DOCKER_IMAGE }} .
@@ -78,6 +78,6 @@ jobs:
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0
         with:
-          service: gensosenkyo-2017
+          service: ${{ env.CLOUD_RUN_SERVICE_NAME }}
           image: ${{ env.DOCKER_IMAGE }}
           region: ${{ env.GCP_REGION }}
