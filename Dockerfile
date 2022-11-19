@@ -20,7 +20,8 @@ COPY Gemfile.lock /myapp/Gemfile.lock
 RUN gem install bundler
 
 # TODO: 開発環境として Docker を利用する場合はどうするか
-RUN bundle install --without test development
+RUN bundle config set --local without 'test development'
+RUN bundle install
 
 COPY . /myapp
 

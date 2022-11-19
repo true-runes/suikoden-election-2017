@@ -22,7 +22,7 @@ production:
   port: <%= ENV['PG_PORT_PRODUCTION'] || 5432 %>
   username: <%= ENV['PG_USERNAME_PRODUCTION'] || 'root' %>
   password: <%= ENV['PG_PASSWORD_PRODUCTION'] || 'password' %>
-  database: <%= ENV['PG_DATABASE_PRODUCTION'] || 'gss2017_production' %>
+  database: 'gss2017_production'
   template: template0
   collation: ja_JP.UTF-8
   ctype: ja_JP.UTF-8
