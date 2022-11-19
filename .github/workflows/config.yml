@@ -81,6 +81,6 @@ jobs:
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0
         with:
-          service: cloud-run-sample-rails-app
+          service: gensosenkyo-2017
           image: ${{ env.DOCKER_IMAGE }}
           region: ${{ env.GCP_REGION }}
