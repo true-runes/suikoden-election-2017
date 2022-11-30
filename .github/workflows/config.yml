@@ -76,7 +76,7 @@ jobs:
         run: |
           docker push ${{ env.DOCKER_IMAGE }}
       - name: Deploy to Cloud Run
-        uses: google-github-actions/deploy-cloudrun@v0
+        uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: ${{ env.CLOUD_RUN_SERVICE_NAME }}
           image: ${{ env.DOCKER_IMAGE }}
