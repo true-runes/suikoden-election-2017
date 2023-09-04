@@ -39,7 +39,7 @@ jobs:
           --health-retries 5
     steps:
       - name: コードをチェックアウトする
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Ruby のセットアップを行う
         uses: ruby/setup-ruby@v1
         with:
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ソースコードをチェックアウトする
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: GCP の認証を行う
         uses: google-github-actions/auth@v1
         with:
