@@ -1,4 +1,4 @@
-FROM ruby:3.2.2
+FROM ruby:3.4.5
 ENV LANG=C.UTF-8
 
 RUN apt update -qq && apt install -y build-essential libpq-dev nodejs
