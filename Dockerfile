@@ -1,5 +1,5 @@
 FROM ruby:3.2.2
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 
 RUN apt update -qq && apt install -y build-essential libpq-dev nodejs
 RUN gem install bundler
