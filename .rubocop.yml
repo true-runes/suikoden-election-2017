@@ -10,6 +10,7 @@ AllCops:
     - 'config/**/*' # 場合によっては除外する（コメントアウトを外す）
     - 'db/Schemafile'
     - 'db/cache_schema.rb'
+    - 'db/migrate/**/*'
     - 'db/schema.rb'
     - 'db/queue_schema.rb'
     - 'sig/**/*'
