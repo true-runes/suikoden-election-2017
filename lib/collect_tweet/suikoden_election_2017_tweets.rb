@@ -1,4 +1,4 @@
-class SuikodenElection2017Tweets
+class SuikodenElection2017Tweets # rubocop:disable Metrics/ClassLength
   require 'bundler/setup'
   require 'twitter'
   require 'active_record'
@@ -16,23 +16,23 @@ class SuikodenElection2017Tweets
 
   config = YAML.load_file('config/database.yml')
   ActiveRecord::Base.establish_connection(config['development'])
-  class Tweet < ActiveRecord::Base
+  class Tweet < ActiveRecord::Base # rubocop:disable Rails/ApplicationRecord
   end
 
-  class User < ActiveRecord::Base
+  class User < ActiveRecord::Base # rubocop:disable Rails/ApplicationRecord
   end
 
-  class AttachedImage < ActiveRecord::Base
+  class AttachedImage < ActiveRecord::Base # rubocop:disable Rails/ApplicationRecord
   end
 
-  class Hashtag < ActiveRecord::Base
+  class Hashtag < ActiveRecord::Base # rubocop:disable Rails/ApplicationRecord
   end
 
-  class IsReadableTweet < ActiveRecord::Base
+  class IsReadableTweet < ActiveRecord::Base # rubocop:disable Rails/ApplicationRecord
   end
 
   # HACK: limit(1)っていう取得のメソッドじゃなくてちゃんとメソッドがあるので直す（NOT DRY でイケてない）
-  def get_since_id
+  def get_since_id # rubocop:disable Naming/AccessorMethodName
     if Tweet.order('tweet_id desc').limit(1).empty? # HACK: magic number
       '1' # 2週間制限があるから実質的にほとんど意味はない定義
     else
@@ -41,15 +41,19 @@ class SuikodenElection2017Tweets
   end
 
   # HACK: limit(1)っていう取得のメソッドじゃなくてちゃんとメソッドがあるので直す（NOT DRY でイケてない）
-  def get_max_id
+  def get_max_id # rubocop:disable Naming/AccessorMethodName
     Tweet.order('tweet_id asc').limit(1)[0].tweet_id unless Tweet.order('tweet_id asc').limit(1).empty?
   end
 
   def tweets_by_hashtag(hashtag, take_amount = 200, since_id = get_since_id)
     # since_id = "1234567890"
     tweets = @client.search(hashtag, { since_id: }).take(take_amount)
+
+    # rubocop:disable Lint/EmptyConditionalBody
     if tweets.empty?
     end
+    # rubocop:enable Lint/EmptyConditionalBody
+
     tweets
   end
 
@@ -57,8 +61,12 @@ class SuikodenElection2017Tweets
   def back_tweets_by_hashtag(hashtag, take_amount = 200, max_id = get_max_id)
     # max_id = "1234567890"
     tweets = @client.search(hashtag, { max_id: }).take(take_amount)
+
+    # rubocop:disable Lint/EmptyConditionalBody
     if tweets.empty?
     end
+    # rubocop:enable Lint/EmptyConditionalBody
+
     tweets
   end
 
@@ -121,7 +129,9 @@ class SuikodenElection2017Tweets
   def create_record_to_hashtags(tweet)
     attrs = hashtag_attrs(tweet)
     attrs.each do |attr|
+      # rubocop:disable Rails/WhereExists
       next if Hashtag.where(tweet_id: tweet.id, tagname: attr[:hashtag]).exists? # HACK: UPSERT の方法を再検討
+      # rubocop:enable Rails/WhereExists
 
       Hashtag.create(
         tweet_id: tweet.id,

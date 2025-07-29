@@ -6,7 +6,8 @@ module SelectTweetsByHashtag
     tweets.each do |tweet|
       target_tweets = Hashtag.where(tweet_id: tweet.tweet_id)
 
-      target_tweets.each do |target_tweet| # rubocop:disable Lint/UnreachableLoop (FIXME:)
+      # FIXME: Lint/UnreachableLoop
+      target_tweets.each do |target_tweet| # rubocop:disable Lint/UnreachableLoop
         @selected_tweets << tweet if [hashtag_a, hashtag_b].include?(target_tweet.tagname)
 
         break # TODO: 「どちらかが含まれていた時点で終了」ということであるが、論理的に複雑である

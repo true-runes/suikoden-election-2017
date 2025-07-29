@@ -16,7 +16,7 @@ class ForMembersDuplicatedVoteController < ApplicationController
     for_post_method(params[:search_word]) if request.post?
   end
 
-  def for_get_method # rubocop:disable Metrics/AbcSize
+  def for_get_method # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
     tomochin = without_retweets_and_gensosenkyo_loose_limited_period # Array
     selected_tomochin = select_tweets_by_hashtag(tomochin, '幻水総選挙2017投票', '幻水総選挙2017')
 
@@ -57,7 +57,7 @@ class ForMembersDuplicatedVoteController < ApplicationController
     @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per)
   end
 
-  def for_post_method(search_word) # rubocop:disable Metrics/AbcSize
+  def for_post_method(search_word) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
     tomochin = without_retweets_and_gensosenkyo_loose_limited_period # Array
     selected_tomochin = select_tweets_by_hashtag(tomochin, '幻水総選挙2017投票', '幻水総選挙2017')
 

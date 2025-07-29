@@ -16,7 +16,7 @@ class ForMembersOtherTagVoteController < ApplicationController
     for_post_method(params[:search_word]) if request.post?
   end
 
-  def for_get_method # rubocop:disable Metrics/AbcSize
+  def for_get_method # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
     # ex. https://twitter.com/nyaka_y/status/874979736308416512
     all_records = Hashtag.all.map(&:attributes)
     @all_rec_tweet_ids = []
@@ -61,7 +61,7 @@ class ForMembersOtherTagVoteController < ApplicationController
     @kaminaried_tweets = Kaminari.paginate_array(last_result_tweets.reverse).page(params[:page]).per(@kaminari_page_per)
   end
 
-  def for_post_method(search_word) # rubocop:disable Metrics/AbcSize
+  def for_post_method(search_word) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
     # ex. https://twitter.com/nyaka_y/status/874979736308416512
     all_records = Hashtag.all.map(&:attributes)
     @all_rec_tweet_ids = []
