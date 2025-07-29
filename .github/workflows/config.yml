@@ -45,6 +45,9 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+      - name: RuboCop を実行する
+        run: |
+          bundle exec rubocop
       - name: データベースをセットアップする
         run: |
           bin/rails db:create

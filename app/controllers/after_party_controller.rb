@@ -12,7 +12,7 @@ class AfterPartyController < ApplicationController
 
   private
 
-  def after_party_get_method # rubocop:disable Metrics/AbcSize
+  def after_party_get_method # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
     # ex. https://twitter.com/nyaka_y/status/874979736308416512
     all_records = Hashtag.all.map(&:attributes)
     @all_rec_tweet_ids = []

@@ -17,7 +17,7 @@ module ForPostMethodAtMembers
     # この時点で result_tweets は Array（Tweet であり ActiveRecord ではない）
     @last_result_tweets = []
     result_tweets.select do |element|
-      @last_result_tweets << element if element.text =~ /.*#{serach_word}.*/
+      @last_result_tweets << element if /.*#{serach_word}.*/.match?(element.text)
     end
 
     @kaminari_page_per = 20

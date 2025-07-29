@@ -1,51 +1,111 @@
-# inherit_from: .rubocop_todo.yml
-
-require:
+plugins:
+  - rubocop-performance
   - rubocop-rails
 
 AllCops:
-  NewCops: enable
   DisplayCopNames: true
+  DisplayStyleGuide: true
   Exclude:
-  - 'vendor/**/*'
-  - 'node_modules/**/*'
-  - 'spec/**/*'
-  - 'db/schema.rb'
-  - 'db/**/*'
-  - 'config/**/*'
-  - 'Guardfile'
-  - 'bin/**/*'
-  - 'tmp/**/*'
+    - 'bin/**/*'
+    - 'config/**/*' # 場合によっては除外する（コメントアウトを外す）
+    - 'db/Schemafile'
+    - 'db/cache_schema.rb'
+    - 'db/migrate/**/*'
+    - 'db/schema.rb'
+    - 'db/queue_schema.rb'
+    - 'sig/**/*'
+    # - "spec/**/*" # 場合によっては除外する（コメントアウトを外す）
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+  Include:
+    - '**/*.rb'
+    # - 'exe/**/*'
+  NewCops: enable
+  SuggestExtensions: true
+  TargetRubyVersion: 3.2 # Ruby のバージョンに応じて変更する
+
+# https://docs.rubocop.org/rubocop/cops_layout.html#layoutclassstructure
+Layout/ClassStructure:
+  # デフォルトでは false なので明示的に true にする必要がある
+  Enabled: true
+  ExpectedOrder:
+    - module_inclusion
+    - constants
+    - association
+    - public_attribute_macros
+    - public_delegate
+    - macros
+    - public_class_methods
+    - initializer
+    - public_methods
+    - protected_attribute_macros
+    - protected_methods
+    - private_attribute_macros
+    - private_delegate
+    - private_methods
+Layout/LeadingCommentSpace:
+  # RBSの "#:" に対応する
+  AllowRBSInlineAnnotation: true
+Layout/LineLength:
+  Max: 140
+
+Metrics/AbcSize:
+  Max: 17 # デフォルトは 17 である
+Metrics/BlockLength:
+  Max: 25 # デフォルトは 25 である
+Metrics/ClassLength:
+  Max: 100 # デフォルトは 100 である
+Metrics/CyclomaticComplexity:
+  Max: 6 # デフォルトは 6 である
+Metrics/MethodLength:
+  Max: 20 # デフォルトは 100 である
+Metrics/ModuleLength:
+  Max: 100 # デフォルトは 100 である
+Metrics/PerceivedComplexity:
+  Max: 8 # デフォルトは 8 である
+
+Naming/FileName:
+  # ファイル名の命名にスネークケース以外を認めてもよいファイル群
+  Exclude:
+    - 'Gemfile'
+    - 'Gemfile.lock'
+    - 'Rakefile'
+    - 'Steepfile'
+
+Rails/Output:
+  Enabled: true # デフォルトは true である
+
+# RSpec/ContextWording:
+#   Enabled: false
+# RSpec/ExampleLength:
+#   Max: 45
+# RSpec/MultipleExpectations:
+#   Enabled: false # 場合によっては true にする
+#   # Max: 5
+# RSpec/NestedGroups:
+#   Max: 4
+# RSpec/PendingWithoutReason:
+#   Enabled: false # true にしたいところだが、理由の書き方の制約がつらいので false でいいだろう
+# RSpec/SpecFilePathFormat:
+#   Enabled: false
 
 Style/Documentation:
   Enabled: false
-
 Style/FrozenStringLiteralComment:
   Enabled: false
-
+Style/HashEachMethods:
+  Enabled: false
+Style/HashSyntax:
+  # ハッシュのキーとバリューが同じ場合は省略する
+  # cf. https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
+  EnforcedShorthandSyntax: always
+Style/NumericPredicate:
+  Enabled: true # x > 0 を x.positive? にするかどうか（デフォルトは true）
+Style/RedundantInitialize:
+  Enabled: false
 Style/StringLiterals:
   EnforcedStyle: single_quotes
-
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: single_quotes
-
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
-
-Metrics/BlockLength:
-  Max: 52
-
-Metrics/ClassLength:
-  Max: 500
-
-Metrics/CyclomaticComplexity:
-  Max: 16
-
-Metrics/MethodLength:
-  Max: 65
-
-Metrics/PerceivedComplexity:
-  Max: 17
-
-Metrics/ModuleLength:
-  Max: 160

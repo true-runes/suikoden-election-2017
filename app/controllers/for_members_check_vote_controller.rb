@@ -4,6 +4,7 @@ class ForMembersCheckVoteController < ApplicationController
   include SelectTweetsByHashtag
   include ForGetMethodAtMembers
   include ForPostMethodAtMembers
+
   layout 'application_members'
   # before_action :site_http_basic_authenticate_with
 

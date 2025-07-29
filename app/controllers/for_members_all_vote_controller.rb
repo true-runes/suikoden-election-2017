@@ -4,6 +4,7 @@ class ForMembersAllVoteController < ApplicationController
   include SelectTweetsByHashtag
   include ForGetMethodAtMembers
   include ForPostMethodAtMembers
+
   layout 'application_members'
 
   def index
@@ -52,7 +53,7 @@ class ForMembersAllVoteController < ApplicationController
     # この時点で last_result_tweets は Array（Tweet であり ActiveRecord ではない）
     @lastest_result_tweets = []
     last_result_tweets.select do |element|
-      @lastest_result_tweets << element if element.text =~ /.*#{search_word}.*/
+      @lastest_result_tweets << element if /.*#{search_word}.*/.match?(element.text)
     end
 
     @kaminari_page_per = 20
