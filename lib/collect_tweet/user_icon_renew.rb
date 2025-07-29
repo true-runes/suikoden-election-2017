@@ -7,52 +7,56 @@ class SuikodenElection2017Tweets
 
   def client
     @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
-      config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
-      config.access_token        = ENV['TWITTER_ACCESS_TOKEN']
-      config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+      config.consumer_key        = ENV.fetch('TWITTER_CONSUMER_KEY', nil)
+      config.consumer_secret     = ENV.fetch('TWITTER_CONSUMER_SECRET', nil)
+      config.access_token        = ENV.fetch('TWITTER_ACCESS_TOKEN', nil)
+      config.access_token_secret = ENV.fetch('TWITTER_ACCESS_TOKEN_SECRET', nil)
     end
   end
 
   config = YAML.load_file('config/database.yml')
-  ActiveRecord::Base.establish_connection(config["development"])
+  ActiveRecord::Base.establish_connection(config['development'])
   class Tweet < ActiveRecord::Base
   end
+
   class User < ActiveRecord::Base
   end
+
   class AttachedImage < ActiveRecord::Base
   end
+
   class Hashtag < ActiveRecord::Base
   end
+
   class IsReadableTweet < ActiveRecord::Base
   end
 
   # HACK: limit(1)っていう取得のメソッドじゃなくてちゃんとメソッドがあるので直す（NOT DRY でイケてない）
   def get_since_id
-    if Tweet.order("tweet_id desc").limit(1).empty? # HACK: magic number
-      since_id = "1" # 2週間制限があるから実質的にほとんど意味はない定義
+    if Tweet.order('tweet_id desc').limit(1).empty? # HACK: magic number
+      '1' # 2週間制限があるから実質的にほとんど意味はない定義
     else
-      since_id = Tweet.order("tweet_id desc").limit(1)[0].tweet_id
+      Tweet.order('tweet_id desc').limit(1)[0].tweet_id
     end
   end
 
   # HACK: limit(1)っていう取得のメソッドじゃなくてちゃんとメソッドがあるので直す（NOT DRY でイケてない）
   def get_max_id
-    max_id = Tweet.order("tweet_id asc").limit(1)[0].tweet_id unless Tweet.order("tweet_id asc").limit(1).empty?
+    Tweet.order('tweet_id asc').limit(1)[0].tweet_id unless Tweet.order('tweet_id asc').limit(1).empty?
   end
 
-  def tweets_by_hashtag(hashtag, take_amount=200, since_id=get_since_id)
+  def tweets_by_hashtag(hashtag, take_amount = 200, since_id = get_since_id)
     # since_id = "1234567890"
-    tweets = @client.search(hashtag, { since_id: since_id }).take(take_amount)
+    tweets = @client.search(hashtag, { since_id: }).take(take_amount)
     if tweets.empty?
     end
     tweets
   end
 
   # 後ろにたどるの場合は初期取得のときと、総チェック（ユーザ情報（ここはメソッド分けたい）やツイートの有無）のとき
-  def back_tweets_by_hashtag(hashtag, take_amount=200, max_id=get_max_id)
+  def back_tweets_by_hashtag(hashtag, take_amount = 200, max_id = get_max_id)
     # max_id = "1234567890"
-    tweets = @client.search(hashtag, { max_id: max_id }).take(take_amount)
+    tweets = @client.search(hashtag, { max_id: }).take(take_amount)
     if tweets.empty?
     end
     tweets
@@ -84,36 +88,36 @@ class SuikodenElection2017Tweets
 
   # データベースに書き込む
   def create_record_to_tweets(tweet)
-    unless Tweet.exists?(tweet_id: tweet.id) # HACK: UPSERT の方法を再検討
-      Tweet.create(
-        tweet_id: tweet.id,
-        user_id: tweet.user.id,
-        text: tweet.text,
-        full_text: tweet.full_text,
-        uri: tweet.uri,
-        tweeted_at: tweet.created_at,
-        is_retweet: tweet.retweet?,
-        is_attached_image: tweet.media?,
-        has_hashtag: tweet.hashtags?,
-      )
-    end
+    return if Tweet.exists?(tweet_id: tweet.id) # HACK: UPSERT の方法を再検討
+
+    Tweet.create(
+      tweet_id: tweet.id,
+      user_id: tweet.user.id,
+      text: tweet.text,
+      full_text: tweet.full_text,
+      uri: tweet.uri,
+      tweeted_at: tweet.created_at,
+      is_retweet: tweet.retweet?,
+      is_attached_image: tweet.media?,
+      has_hashtag: tweet.hashtags?
+    )
   end
 
   def create_record_to_users(tweet)
     user = tweet.user
-    profile_image_uri = user.profile_image_uri? ? user.profile_image_uri_https : "https://abs.twimg.com/sticky/default_profile_images/default_profile.png"
+    profile_image_uri = user.profile_image_uri? ? user.profile_image_uri_https : 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
     if User.exists?(user_id: user.id) # HACK: UPSERT の方法を再検討
       usr = User.where(user_id: user.id).first
       usr.update_attribute(
-        profile_image_uri: profile_image_uri,
+        profile_image_uri:
       )
     else
       User.create(
         user_id: user.id,
         screen_name: user.screen_name,
         name: user.name,
-        profile_image_uri: profile_image_uri, # HACK: { size: 'original' }?
-        is_protected: protected_user?(user.screen_name),
+        profile_image_uri:, # HACK: { size: 'original' }?
+        is_protected: protected_user?(user.screen_name)
       )
     end
   end
@@ -121,12 +125,12 @@ class SuikodenElection2017Tweets
   def create_record_to_hashtags(tweet)
     attrs = hashtag_attrs(tweet)
     attrs.each do |attr|
-      unless Hashtag.where(tweet_id: tweet.id, tagname: attr[:hashtag]).exists? # HACK: UPSERT の方法を再検討
-        Hashtag.create(
-          tweet_id: tweet.id,
-          tagname: attr[:hashtag],
-        )
-      end
+      next if Hashtag.where(tweet_id: tweet.id, tagname: attr[:hashtag]).exists? # HACK: UPSERT の方法を再検討
+
+      Hashtag.create(
+        tweet_id: tweet.id,
+        tagname: attr[:hashtag]
+      )
     end
   end
 
@@ -134,11 +138,11 @@ class SuikodenElection2017Tweets
     attrs = attached_image_attrs(tweet)
     attrs.each do |attr|
       # unless AttachedImage.where(media_id: attr[:media_id]).exists? # HACK: UPSERT の方法を再検討
-        AttachedImage.create(
-          tweet_id: tweet.id,
-          media_id: attr[:media_id],
-          uri: attr[:uri],
-        )
+      AttachedImage.create(
+        tweet_id: tweet.id,
+        media_id: attr[:media_id],
+        uri: attr[:uri]
+      )
       # end
     end
   end
@@ -154,14 +158,14 @@ class SuikodenElection2017Tweets
     create_record_to_attached_images(tweet) if tweet.media?
   end
 
-  def create_record_by_hashtag(hashtag, take_amount=200, since_id=get_since_id)
+  def create_record_by_hashtag(hashtag, take_amount = 200, since_id = get_since_id)
     tweets = tweets_by_hashtag(hashtag, take_amount, since_id)
     tweets.each do |tweet|
       create_record_to_all_tables(tweet)
     end
   end
 
-  def back_create_record_by_hashtag(hashtag, take_amount=200, max_id=get_max_id)
+  def back_create_record_by_hashtag(hashtag, take_amount = 200, max_id = get_max_id)
     tweets = back_tweets_by_hashtag(hashtag, take_amount, max_id)
     tweets.each do |tweet|
       create_record_to_all_tables(tweet)
@@ -170,17 +174,17 @@ class SuikodenElection2017Tweets
 
   def collect_tweet
     client
-    create_record_by_hashtag("#幻水総選挙2017投票 OR #幻水総選挙2017 OR #幻水総選挙 OR #幻水総選挙運動 OR #幻水総選挙2017後夜祭")
+    create_record_by_hashtag('#幻水総選挙2017投票 OR #幻水総選挙2017 OR #幻水総選挙 OR #幻水総選挙運動 OR #幻水総選挙2017後夜祭')
     # back_create_record_by_hashtag("#幻水総選挙2017投票 OR #幻水総選挙2017 OR #幻水総選挙 OR #幻水総選挙運動")
   end
 
   def tweet_by_id(id)
     client
-    tweet = @client.status(id)
+    @client.status(id)
   end
 
   def get_users
-    users = User.find_by_sql([%Q{SELECT * FROM users ORDER BY id ASC}])
+    User.find_by_sql([%(SELECT * FROM users ORDER BY id ASC)])
   end
 
   # puts @client.user?(users[0].user_id.to_i)
@@ -189,16 +193,15 @@ class SuikodenElection2017Tweets
     users = get_users
 
     users.each_with_index do |user, i|
-      next unless @client.user?((user.user_id).to_i)
-      latest_user_image_uri = latest_user_image_uri((user.user_id).to_i)
+      next unless @client.user?(user.user_id.to_i)
+
+      latest_user_image_uri = latest_user_image_uri(user.user_id.to_i)
 
       user.update_attribute(
         :profile_image_uri, latest_user_image_uri
       )
 
-      if (i + 1) % 30 == 0
-        sleep(60)
-      end
+      sleep(60) if (i + 1) % 30 == 0
     end
   end
 
