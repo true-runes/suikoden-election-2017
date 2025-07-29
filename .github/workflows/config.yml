@@ -45,9 +45,11 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-      - name: RuboCop を実行する
+      - name: RAILS_ENV=production で単純起動を確かめる
+        env:
+          RAILS_ENV: production
         run: |
-          bundle exec rubocop
+          bin/rails runner "puts 'Hello, World!'"
       - name: データベースをセットアップする
         run: |
           bin/rails db:create
