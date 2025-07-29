@@ -7,8 +7,8 @@ end
 
 ruby '3.4.5'
 
-# gem 'coffee-rails'
-gem 'csv'
+gem 'coffee-rails' # 消したいけど消せない
+gem 'csv' # 要明示
 gem 'dotenv-rails'
 # gem 'jbuilder'
 gem 'kaminari'
@@ -17,7 +17,7 @@ gem 'pg'
 gem 'puma'
 gem 'rails'
 gem 'sass-rails'
-# gem 'turbolinks'
+gem 'turbolinks' # 消したいけど消せない
 gem 'twitter'
 gem 'uglifier'
 # gem 'whenever', require: false
