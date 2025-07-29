@@ -18,7 +18,7 @@ gem 'rails', '~> 7.2.0'
 gem 'sass-rails'
 # gem 'turbolinks'
 gem 'twitter'
-# gem 'uglifier'
+gem 'uglifier'
 # gem 'whenever', require: false
 
 group :development, :test do
