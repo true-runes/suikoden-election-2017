@@ -48,6 +48,7 @@ jobs:
       - name: RAILS_ENV=production で単純起動を確かめる
         env:
           RAILS_ENV: production
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           bin/rails runner "puts 'Hello, World!'"
       - name: データベースをセットアップする
