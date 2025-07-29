@@ -8,6 +8,7 @@ end
 ruby '3.4.5'
 
 # gem 'coffee-rails'
+gem 'csv'
 gem 'dotenv-rails'
 # gem 'jbuilder'
 gem 'kaminari'
