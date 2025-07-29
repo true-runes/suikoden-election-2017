@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:17.5
+    environment:
+      POSTGRES_DB: gss2017_production
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      PG_HOST_PRODUCTION: postgres
+      PG_USERNAME_PRODUCTION: root
+      PG_PASSWORD_PRODUCTION: password
+      SECRET_KEY_BASE: temp_secret_key_for_demo
+      TWITTER_CONSUMER_KEY: dummy
+      TWITTER_CONSUMER_SECRET: dummy
+      TWITTER_ACCESS_TOKEN: dummy
+      TWITTER_ACCESS_TOKEN_SECRET: dummy
+      RAILS_SERVE_STATIC_FILES: "true"
+    depends_on:
+      - postgres
+
+# volumes:
+#   postgres_data:
