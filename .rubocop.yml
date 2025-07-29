@@ -22,7 +22,7 @@ AllCops:
     # - 'exe/**/*'
   NewCops: enable
   SuggestExtensions: true
-  TargetRubyVersion: 3.2 # Ruby のバージョンに応じて変更する
+  TargetRubyVersion: 3.4 # Ruby のバージョンに応じて変更する
 
 # https://docs.rubocop.org/rubocop/cops_layout.html#layoutclassstructure
 Layout/ClassStructure:
