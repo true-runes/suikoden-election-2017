@@ -69,7 +69,7 @@ jobs:
       - name: ソースコードをチェックアウトする
         uses: actions/checkout@v4
       - name: GCP の認証を行う
-        uses: google-github-actions/auth@v1
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}
       - name: GCP の CLI の認証を行う
