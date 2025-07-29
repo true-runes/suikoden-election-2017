@@ -37,7 +37,7 @@ end
 group :test do
   # gem 'capybara'
   # gem 'factory_bot_rails'
-  # gem 'rspec-rails', require: false
+  gem 'rspec-rails', require: false
   # gem 'selenium-webdriver'
   # gem 'webdrivers'
 end
