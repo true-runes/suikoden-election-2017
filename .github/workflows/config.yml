@@ -77,9 +77,6 @@ jobs:
         uses: google-github-actions/auth@140bb5113ffb6b65a7e9b937a81fa96cf5064462 # v2.1.11
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}
-      - name: GCP の CLI の認証を行う
-        run: |
-          gcloud auth configure-docker ${{ env.GCP_AUTH_HOST }}
       - name: Docker イメージ をビルドする
         run: |
           docker build -t ${{ env.DOCKER_IMAGE }} .
